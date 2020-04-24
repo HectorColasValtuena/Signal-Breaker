@@ -23,12 +23,13 @@ public class Wave : ISignalContent
 
 	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, bool recursive)
 	{
-		if (collectorStack == null)	//create an empty collectorStack if not available
+		//create an empty collectorStack if not available
+		if (collectorStack == null)
 		{
-			//[TO-DO]
-			//collectorStack = new !!ISignalStack();
+			collectorStack = new WaveStack();
 		}
 
+		//add this object's value to the stack if the requested position coincides with this wave's position
 		if (position == _offset) {
 			collectorStack.AddValue(waveValue);
 		}
