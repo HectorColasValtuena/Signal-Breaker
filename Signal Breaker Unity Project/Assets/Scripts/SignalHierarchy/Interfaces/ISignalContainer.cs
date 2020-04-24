@@ -3,7 +3,8 @@
 //Implementa métodos para acceder una posición específica de la señal, recursivamente y abstrayendo su offset.
 public interface ISignalContainer : ISignalHandler
 {
-	//Insert newEntry object. a position is given updates child position applying this container's offset value
+	//Insert newEntry object.
+	//If a position is given updates child offset applying this container's offset value
 	void AddChild (ISignalContent newEntry);
 	void AddChildAt (ISignalContent newEntry, int position);
 
