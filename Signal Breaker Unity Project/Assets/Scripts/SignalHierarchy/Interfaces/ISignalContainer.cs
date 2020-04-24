@@ -4,9 +4,9 @@
 public interface ISignalContainer : ISignalHandler
 {
 	//Insert newEntry object.
-	//If a position is given updates child offset applying this container's offset value
+	//If a position is given updates child offset. If absolutePosition = false, apply this container’s offset to child position.
 	void AddChild (ISignalContent newEntry);
-	void AddChildAt (ISignalContent newEntry, int position);
+	void AddChildAt (ISignalContent newEntry, int position, bool absolutePosition = false);
 
 	//Get all immediate children. Optionally choose only children that have values in target position.
 	//If recursive = true will recursively find grandchildren.
