@@ -26,11 +26,11 @@ public class SignalFragment : ISignalContainer, ISignalContent
 
 	//Get all immediate children. Optionally choose only children that have values in target position.
 	//If recursive = true will recursively find grandchildren.
-	ISignalContent GetChildren (bool recursive = true)
+	ISignalContent[] GetChildren (bool recursive = true)
 	{
 		//[TO-DO]
 	}
-	ISignalContent GetChildrenTouching (int position, bool recursive = true)
+	ISignalContent[] GetChildrenTouching (int position, bool recursive = true)
 	{
 		//[TO-DO]
 	}

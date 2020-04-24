@@ -10,8 +10,8 @@ public interface ISignalContainer : ISignalHandler
 
 	//Get all immediate children. Optionally choose only children that have values in target position.
 	//If recursive = true will recursively find grandchildren.
-	ISignalContent GetChildren (bool recursive = true);
-	ISignalContent GetChildrenTouching (int position, bool recursive = true);
+	ISignalContent[] GetChildren (bool recursive = true);
+	ISignalContent[] GetChildrenTouching (int position, bool recursive = true);
 
 	//Remove from this container a list of or every child
 	//THIS DOES NOT DESTROY THE OBJECT - only the reference.
