@@ -10,9 +10,9 @@ public class SignalFragment : ISignalContainer, ISignalContent
 	private List<ISignalContent> contents;
 
 //Constructor
-	public SignalFragment () : this (0, null);
-	public SignalFragment (int __offset) : this (__offset, null);
-	public SignalFragment (List<ISignalContent> __contents) : this (0, __contents);
+	public SignalFragment () : this (0, null) {}
+	public SignalFragment (int __offset) : this (__offset, null) {}
+	public SignalFragment (List<ISignalContent> __contents) : this (0, __contents) {}
 	public SignalFragment (int __offset, List<ISignalContent> __contents)
 	{
 		_offset = __offset;
