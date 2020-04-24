@@ -48,12 +48,27 @@ public class SignalFragment : ISignalContainer, ISignalContent
 
 	//Get all immediate children. Optionally choose only children that have values in target position.
 	//If recursive = true will recursively find grandchildren.
-	ISignalContent[] ISignalContainer.GetChildren (bool recursive)
+	List<ISignalContent> ISignalContainer.GetChildren (List<ISignalContent> collectorArray, bool recursive)
 	{
-		//[TO-DO]
-		return null;
+		//ensure we have a collector array - create one otherwise
+		if (collectorArray == null) { collectorArray = new List<ISignalContent>(); }
+		//save our list of children onto the collector array
+		collectorArray.AddRange(contents);
+		//Recursively append children if requested
+		if (recursive) {
+			//access children as ISignalContainer and propagate request only to fitting children
+			//[TO-DO] -TEST
+			//[TEST-ME]
+			foreach (ISignalContainer child in contents) {
+				if (child != null) {
+					child.GetChildren (collectorArray, recursive);
+				}
+			}
+		}
+		//finally return a reference to the collector array
+		return collectorArray;
 	}
-	ISignalContent[] ISignalContainer.GetChildrenTouching (int position, bool recursive)
+	List<ISignalContent> ISignalContainer.GetChildrenTouching (int position, List<ISignalContent> collectorArray, bool recursive)
 	{
 		//[TO-DO]
 		return null;
