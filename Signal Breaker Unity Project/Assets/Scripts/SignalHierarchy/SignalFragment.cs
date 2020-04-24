@@ -24,38 +24,41 @@ public class SignalFragment : ISignalContainer, ISignalContent
 	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, bool recursive)
 	{
 		//[TO-DO]
+		return null;
 	}
 //ENDOF Implementación ISignalHandler
 //Implementación ISignalContainer
 	//Insert newEntry object.
 	//If a position is given updates child offset applying this container's offset value
-	void AddChild (ISignalContent newEntry)
+	void ISignalContainer.AddChild (ISignalContent newEntry)
 	{
 		//[TO-DO]
 	}
-	void AddChildAt (ISignalContent newEntry, int position)
+	void ISignalContainer.AddChildAt (ISignalContent newEntry, int position)
 	{
 		//[TO-DO]
 	}
 
 	//Get all immediate children. Optionally choose only children that have values in target position.
 	//If recursive = true will recursively find grandchildren.
-	ISignalContent[] GetChildren (bool recursive = true)
+	ISignalContent[] ISignalContainer.GetChildren (bool recursive)
 	{
 		//[TO-DO]
+		return null;
 	}
-	ISignalContent[] GetChildrenTouching (int position, bool recursive = true)
+	ISignalContent[] ISignalContainer.GetChildrenTouching (int position, bool recursive)
 	{
 		//[TO-DO]
+		return null;
 	}
 
 	//Remove from this container a list of or every child
 	//THIS DOES NOT DESTROY THE OBJECT - only the reference.
-	void RemoveChildren (ISignalContent[] targets)
+	void ISignalContainer.RemoveChildren (ISignalContent[] targets)
 	{
 		//[TO-DO]
 	}
-	void RemoveChildren ()
+	void ISignalContainer.RemoveChildren ()
 	{
 		//[TO-DO]
 	}
