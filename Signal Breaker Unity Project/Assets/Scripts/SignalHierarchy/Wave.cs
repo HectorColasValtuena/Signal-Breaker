@@ -1,4 +1,4 @@
-[System.Serializable]
+//[System.Serializable]
 public class Wave : ISignalContent
 {
 	//WaveValue objeto conteniendo las propiedades de una onda
@@ -20,9 +20,13 @@ public class Wave : ISignalContent
 
 //Implementación ISignalContent
 	int ISignalContent.Offset { get { return _offset; } set { _offset = value; } }
-
+//ENDOF Implementación ISignalContent
+//Implementación ISignalHandler
 	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, bool recursive)
 	{
+		//Single-line implementation
+		//((collectorStack == null) ? collectorStack = new WaveStack() : collectorStack).AddValue(waveValue);
+		
 		//create an empty collectorStack if not available
 		if (collectorStack == null)
 		{
@@ -33,8 +37,8 @@ public class Wave : ISignalContent
 		if (position == _offset) {
 			collectorStack.AddValue(waveValue);
 		}
-
+		
 		return collectorStack;
 	}
-//ENDOF Implementación ISignalContent
+//ENDOF Implementación ISignalHandler
 }
