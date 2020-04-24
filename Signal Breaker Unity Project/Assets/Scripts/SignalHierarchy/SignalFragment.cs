@@ -2,6 +2,7 @@
 //Objects implementing only ISignalContent are considered value containers
 
 using System.Collections.Generic;
+//using UnityEngine;
 
 //[System.Serializable]
 public class SignalFragment : ISignalContainer, ISignalContent
@@ -29,14 +30,20 @@ public class SignalFragment : ISignalContainer, ISignalContent
 //ENDOF Implementación ISignalHandler
 //Implementación ISignalContainer
 	//Insert newEntry object.
-	//If a position is given updates child offset applying this container's offset value
+	//If a position is given updates child offset. If absolutePosition = false, apply this container’s offset to child position.
 	void ISignalContainer.AddChild (ISignalContent newEntry)
 	{
-		//[TO-DO]
+		if (newEntry != null) { contents.Add(newEntry); }
+		else { UnityEngine.Debug.LogWarning("Cannot SignalFragment.AddChildAt(null)"); }
 	}
-	void ISignalContainer.AddChildAt (ISignalContent newEntry, int position)
+	void ISignalContainer.AddChildAt (ISignalContent newEntry, int position, bool absolutePosition)
 	{
-		//[TO-DO]
+		if (newEntry != null)
+		{
+			newEntry.Offset = absolutePosition ? position : position - _offset;
+			contents.Add(newEntry);
+		}
+		else { UnityEngine.Debug.LogWarning("Cannot SignalFragment.AddChildAt(null)"); }
 	}
 
 	//Get all immediate children. Optionally choose only children that have values in target position.
