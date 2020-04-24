@@ -1,24 +1,39 @@
-﻿//using UnityEngine;
-
 [System.Serializable]
-public class Wave //: ISignalContainer
+public class Wave : ISignalContent
 {
-	public WaveValue value;
+	//WaveValue objeto conteniendo las propiedades de una onda
+	private int waveValue;
+	private int _offset;
+
 
 //Constructor
-	public Wave (int __value, int __sign)
+	public Wave (int __waveValue)
 	{
-		value = new WaveValue(__value, __sign);
+		waveValue = __waveValue;
+	}
+
+	public Wave (int __waveValue, int __offset) : this (__waveValue)
+	{
+		_offset = __offset;
 	}
 //ENDOF Constructor
 
-//Implementación ISignalContainer
-	//offset
-	private int _offset;
-	public int Offset {
-		get { return _offset; }
-		set { _offset = value; }
+//Implementación ISignalContent
+	int ISignalContent.Offset { get { return _offset; } set { _offset = value; } }
+
+	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, bool recursive)
+	{
+		if (collectorStack == null)	//create an empty collectorStack if not available
+		{
+			//[TO-DO]
+			//collectorStack = new !!ISignalStack();
+		}
+
+		if (position == _offset) {
+			collectorStack.AddValue(waveValue);
+		}
+
+		return collectorStack;
 	}
-	
-//ENDOF Implementación ISignalContainer
+//ENDOF Implementación ISignalContent
 }
