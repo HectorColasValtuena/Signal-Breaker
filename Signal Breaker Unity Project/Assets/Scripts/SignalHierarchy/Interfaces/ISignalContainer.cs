@@ -1,6 +1,8 @@
 ﻿//Interfaz de objeto contenedor de señales. A implementar por contenedores intermedios así como instancias finales de información
 //contiene un offset inicial y un listado de objetos Wave o ISignalContainer
 //Implementa métodos para acceder una posición específica de la señal, recursivamente y abstrayendo su offset.
+using System.Collections.Generic;
+
 public interface ISignalContainer : ISignalHandler
 {
 	//Insert newEntry object.
@@ -9,9 +11,15 @@ public interface ISignalContainer : ISignalHandler
 	void AddChildAt (ISignalContent newEntry, int position, bool absolutePosition = false);
 
 	//Get all immediate children. Optionally choose only children that have values in target position.
+	//Will append items at the end of collectorArray. Will create an empty list if none.
 	//If recursive = true will recursively find grandchildren.
-	ISignalContent[] GetChildren (bool recursive = true);
-	ISignalContent[] GetChildrenTouching (int position, bool recursive = true);
+	List<ISignalContent> GetChildren (List<ISignalContent> collectorArray = null, bool recursive = true);
+	List<ISignalContent> GetChildrenTouching (int position, List<ISignalContent> collectorArray = null, bool recursive = true);
+	/*
+	//and aliases for previous method calls without collectorArray parameter
+	List<ISignalContent> GetChildren (bool recursive = true);
+	List<ISignalContent> GetChildrenTouching (int position, bool recursive = true);
+	//*/
 
 	//Remove from this container a list of or every child
 	//THIS DOES NOT DESTROY THE OBJECT - only the reference.
