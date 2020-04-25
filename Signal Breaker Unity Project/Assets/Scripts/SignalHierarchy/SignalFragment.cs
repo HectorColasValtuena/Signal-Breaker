@@ -22,10 +22,28 @@ public class SignalFragment : ISignalContainer, ISignalContent
 //ENDOF Constructor
 
 //Implementación ISignalHandler
+	//propagate a request for all available values at position down to all children then return the collector stack
 	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, bool recursive)
 	{
-		//[TO-DO]
-		return null;
+		//[TO-DO] - TEST ME
+		//[TEST-ME]
+
+		//create an empty collectorStack if not available
+		if (collectorStack == null)	{ collectorStack = new WaveStack(); }
+
+		//adjust position to this object's offset 
+		position -= _offset;
+
+		//propagate the call down to every children
+		foreach (ISignalContent child in contents) {
+			//propagate the call only if the object is NOT a container or if recursive is true
+			if (recursive || !(child is ISignalContainer))
+			{
+				child.GetValuesAt(position, collectorStack, recursive);
+			}
+		}
+
+		return collectorStack;
 	}
 //ENDOF Implementación ISignalHandler
 
