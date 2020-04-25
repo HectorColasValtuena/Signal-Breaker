@@ -23,6 +23,7 @@ public interface ISignalContainer : ISignalHandler
 
 	//Remove from this container a list of or every child
 	//THIS DOES NOT DESTROY THE OBJECT - only the reference.
-	void RemoveChildren (ISignalContent[] targets);
+	void RemoveChildren (List<ISignalContent> targets);
 	void RemoveChildren ();
+	void RemoveChild (ISignalContent target);
 }
