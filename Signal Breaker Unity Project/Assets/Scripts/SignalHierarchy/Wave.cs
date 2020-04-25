@@ -26,17 +26,13 @@ public class Wave : ISignalContent
 	{
 		//Single-line implementation
 		//((collectorStack == null) ? collectorStack = new WaveStack() : collectorStack).AddValue(waveValue);
-		
+		//no good, doesn't check for this item's position
+
 		//create an empty collectorStack if not available
-		if (collectorStack == null)
-		{
-			collectorStack = new WaveStack();
-		}
+		if (collectorStack == null)	{ collectorStack = new WaveStack(); }
 
 		//add this object's value to the stack if the requested position coincides with this wave's position
-		if (position == _offset) {
-			collectorStack.AddValue(waveValue);
-		}
+		if (position == _offset) { collectorStack.AddValue(waveValue); }
 		
 		return collectorStack;
 	}
