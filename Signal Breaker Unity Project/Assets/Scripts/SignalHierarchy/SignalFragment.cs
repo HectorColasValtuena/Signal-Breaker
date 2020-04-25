@@ -28,6 +28,7 @@ public class SignalFragment : ISignalContainer, ISignalContent
 		return null;
 	}
 //ENDOF Implementación ISignalHandler
+
 //Implementación ISignalContainer
 	//Insert newEntry object.
 	//If a position is given updates child offset. If absolutePosition = false, apply this container’s offset to child position.
@@ -61,30 +62,39 @@ public class SignalFragment : ISignalContainer, ISignalContent
 			//[TEST-ME]
 			foreach (ISignalContainer child in contents) {
 				if (child != null) {
-					child.GetChildren (collectorArray, recursive);
+					child.GetChildren(collectorArray, recursive);
 				}
 			}
 		}
 		//finally return a reference to the collector array
 		return collectorArray;
 	}
+
 	List<ISignalContent> ISignalContainer.GetChildrenTouching (int position, List<ISignalContent> collectorArray, bool recursive)
 	{
 		//[TO-DO]
 		return null;
 	}
 
-	//Remove from this container a list of or every child
+	//Remove from this container a single, a list of, or every child
 	//THIS DOES NOT DESTROY THE OBJECT - only the reference.
-	void ISignalContainer.RemoveChildren (ISignalContent[] targets)
+	void ISignalContainer.RemoveChild (ISignalContent target)
 	{
-		//[TO-DO]
+		while (contents.Remove(target)); //execute remove in a loop to ensure every single instance of target is removed
+	}
+	void ISignalContainer.RemoveChildren (List<ISignalContent> targets)
+	{
+		//remove every instance of content contained in targets
+		contents.RemoveAll((ISignalContent candidate) => {
+			return targets.Contains(candidate);
+		});
 	}
 	void ISignalContainer.RemoveChildren ()
 	{
-		//[TO-DO]
+		contents = new List<ISignalContent>();
 	}
 //ENDOF Implementación ISignalContainer
+
 //Implementación ISignalContent
 	int ISignalContent.Offset { get { return _offset; } set { _offset = value; } }
 //ENDOF Implementación ISignalContent
