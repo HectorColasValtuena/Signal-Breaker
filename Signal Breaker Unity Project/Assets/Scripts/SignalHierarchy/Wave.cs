@@ -21,20 +21,38 @@ public class Wave : ISignalContent
 //Implementación ISignalContent
 	int ISignalContent.Offset { get { return _offset; } set { _offset = value; } }
 //ENDOF Implementación ISignalContent
+
 //Implementación ISignalHandler
-	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, bool recursive)
+	bool ISignalHandler.HasValuesAt (int position, uint loopLength, bool recursive)
 	{
-		//Single-line implementation
-		//((collectorStack == null) ? collectorStack = new WaveStack() : collectorStack).AddValue(waveValue);
-		//no good, doesn't check for this item's position
+		//return true if this value's individual offset equals target position
+		return (loopLength > 0)
+			?	_offset % loopLength == position % loopLength //if a loopLength parameter has been provided compare the relative positions within the given size loop
+			:	_offset == position; //if otherwise LoopLength is zero compare plain positions
 
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//[TO-DO] [TEST-ME]
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	}
+
+	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
+	{
 		//create an empty collectorStack if not available
-		if (collectorStack == null)	{ collectorStack = new WaveStack(); }
+		if (collectorStack == null)	{ collectorStack = new WaveStack(); } //[TO-DO] !! Is there some way to define default collector class elsewhere/pass it through parameters?
+																		 //			!! Perhaps some way to remove this conditional?
 
-		//add this object's value to the stack if the requested position coincides with this wave's position
-		if (position == _offset) { collectorStack.AddValue(waveValue); }
-		
+		//if this wave corresponds to target position, add its value to the stack
+		if (this.ISignalHandler.HasValuesAt (position, loopLength))
+		{
+			collectorStack.AddValue(waveValue);
+		}
+
+		//return a reference to used collection stack
 		return collectorStack;
+
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//[TO-DO] [TEST-ME]
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 //ENDOF Implementación ISignalHandler
 }
