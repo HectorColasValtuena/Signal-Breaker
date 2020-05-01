@@ -42,7 +42,10 @@ public class Wave : ISignalContent
 																		 //			!! Perhaps some way to remove this conditional?
 
 		//if this wave corresponds to target position, add its value to the stack
-		if (this.ISignalHandler.HasValuesAt (position, loopLength))
+		if ((this as ISignalHandler).HasValuesAt (position, loopLength))
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//[TO-DO] Is it really necessary to cast myself to access my own implementation of an interface?
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		{
 			collectorStack.AddValue(waveValue);
 		}
