@@ -22,11 +22,14 @@ public class SignalFragment : ISignalContainer, ISignalContent
 //ENDOF Constructor
 
 //Implementación ISignalHandler
-	//propagate a request for all available values at position down to all children then return the collector stack
+	bool ISignalHandler.HasValuesAt (int position, uint loopLength, bool recursive)
+	{
+		return false;
+	}
+
 	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
 	{
-		//[TO-DO] - TEST ME
-		//[TEST-ME]
+		//propagate a request for all available values at position down to all children then return the collector stack
 
 		//create an empty collectorStack if not available
 		if (collectorStack == null)	{ collectorStack = new WaveStack(); }
@@ -44,6 +47,10 @@ public class SignalFragment : ISignalContainer, ISignalContent
 		}
 
 		return collectorStack;
+
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//[TO-DO] [TEST-ME]
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 //ENDOF Implementación ISignalHandler
 
@@ -69,9 +76,6 @@ public class SignalFragment : ISignalContainer, ISignalContent
 	//If recursive = true will recursively find grandchildren.
 	List<ISignalContent> ISignalContainer.GetChildren (List<ISignalContent> collectorArray, bool recursive)
 	{
-			//[TO-DO] -TEST
-			//[TEST-ME]
-
 		//ensure we have a collector array - create one otherwise
 		if (collectorArray == null) { collectorArray = new List<ISignalContent>(); }
 
@@ -92,6 +96,10 @@ public class SignalFragment : ISignalContainer, ISignalContent
 		}
 		//finally return a reference to the collector array
 		return collectorArray;
+
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//[TO-DO] [TEST-ME]
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
 	}
 
 	List<ISignalContent> ISignalContainer.GetChildrenTouching (int position, List<ISignalContent> collectorArray, bool recursive)
