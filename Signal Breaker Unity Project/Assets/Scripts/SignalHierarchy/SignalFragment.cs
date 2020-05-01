@@ -23,7 +23,7 @@ public class SignalFragment : ISignalContainer, ISignalContent
 
 //Implementación ISignalHandler
 	//propagate a request for all available values at position down to all children then return the collector stack
-	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, bool recursive)
+	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
 	{
 		//[TO-DO] - TEST ME
 		//[TEST-ME]
@@ -39,7 +39,7 @@ public class SignalFragment : ISignalContainer, ISignalContent
 			//propagate the call only if the object is NOT a container or if recursive is true
 			if (recursive || !(child is ISignalContainer))
 			{
-				child.GetValuesAt(position, collectorStack, recursive);
+				child.GetValuesAt(position, collectorStack, loopLength, recursive);
 			}
 		}
 
@@ -69,17 +69,23 @@ public class SignalFragment : ISignalContainer, ISignalContent
 	//If recursive = true will recursively find grandchildren.
 	List<ISignalContent> ISignalContainer.GetChildren (List<ISignalContent> collectorArray, bool recursive)
 	{
-		//ensure we have a collector array - create one otherwise
-		if (collectorArray == null) { collectorArray = new List<ISignalContent>(); }
-		//save our list of children onto the collector array
-		collectorArray.AddRange(contents);
-		//Recursively append children if requested
-		if (recursive) {
-			//access children as ISignalContainer and propagate request only to fitting children
 			//[TO-DO] -TEST
 			//[TEST-ME]
-			foreach (ISignalContainer child in contents) {
-				if (child != null) {
+
+		//ensure we have a collector array - create one otherwise
+		if (collectorArray == null) { collectorArray = new List<ISignalContent>(); }
+
+		//save our list of children onto the collector array
+		collectorArray.AddRange(contents);
+
+		//Recursively append children if requested
+		if (recursive)
+		{
+			//access children as ISignalContainer and propagate request only to fitting children
+			foreach (ISignalContainer child in contents)
+			{
+				if (child != null)
+				{
 					child.GetChildren(collectorArray, recursive);
 				}
 			}
