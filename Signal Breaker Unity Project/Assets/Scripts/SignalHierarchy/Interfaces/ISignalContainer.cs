@@ -15,11 +15,6 @@ public interface ISignalContainer : ISignalHandler
 	//If recursive = true will recursively find grandchildren.
 	List<ISignalContent> GetChildren (List<ISignalContent> collectorArray = null, bool recursive = true);
 	List<ISignalContent> GetChildrenTouching (int position, List<ISignalContent> collectorArray = null, bool recursive = true);
-	/*
-	//and aliases for previous method calls without collectorArray parameter
-	List<ISignalContent> GetChildren (bool recursive = true);
-	List<ISignalContent> GetChildrenTouching (int position, bool recursive = true);
-	//*/
 
 	//Remove from this container a list of or every child
 	//THIS DOES NOT DESTROY THE OBJECT - only the reference.
