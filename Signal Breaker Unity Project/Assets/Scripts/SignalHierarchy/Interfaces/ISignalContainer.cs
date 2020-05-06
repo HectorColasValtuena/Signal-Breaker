@@ -14,7 +14,7 @@ public interface ISignalContainer : ISignalHandler
 	//Will append items at the end of collectorArray. Will create an empty list if none.
 	//If recursive = true will recursively find grandchildren.
 	List<ISignalContent> GetChildren (List<ISignalContent> collectorArray = null, bool recursive = true);
-	List<ISignalContent> GetChildrenTouching (int position, List<ISignalContent> collectorArray = null, bool recursive = true);
+	List<ISignalContent> GetChildrenTouching (int position, List<ISignalContent> collectorArray = null, uint loopLength = 0, bool recursive = true);
 
 	//Remove from this container a list of or every child
 	//THIS DOES NOT DESTROY THE OBJECT - only the reference.
