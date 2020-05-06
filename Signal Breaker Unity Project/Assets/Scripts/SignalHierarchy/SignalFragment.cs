@@ -25,6 +25,22 @@ public class SignalFragment : ISignalContainer, ISignalContent
 	bool ISignalHandler.HasValuesAt (int position, uint loopLength, bool recursive)
 	{
 		return false;
+
+		position = MathShit.AbsoluteToRelativePosition(position, _offset, loopLength);
+
+
+		foreach (ISignalContent child in contents)
+		{
+			//propagate the call to every children if recursive = true,
+			//only to children who are not containers if recursive = false
+			if ((recursive || (child as ISignalContainer) == null) && child.HasValuesAt(position, loopLength, recursive))
+			{
+				return true;
+			}
+		}
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//[TO-DO] [TEST-ME]
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 
 	ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
