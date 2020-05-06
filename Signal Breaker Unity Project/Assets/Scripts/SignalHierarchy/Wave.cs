@@ -26,9 +26,7 @@ public class Wave : ISignalContent
 	bool ISignalHandler.HasValuesAt (int position, uint loopLength, bool recursive)
 	{
 		//return true if this value's individual offset equals target position
-		return (loopLength > 0)
-			?	_offset % loopLength == position % loopLength //if a loopLength parameter has been provided compare the relative positions within the given size loop
-			:	_offset == position; //if otherwise LoopLength is zero compare plain positions
+		return MathShit.AbsoluteToRelativePosition(position, _offset, loopLength) == 0;
 
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		//[TO-DO] [TEST-ME]
