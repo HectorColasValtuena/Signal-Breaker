@@ -51,7 +51,7 @@ public class SignalFragment : ISignalContainer, ISignalContent
 		if (collectorStack == null)	{ collectorStack = new WaveStack(); }
 
 		//adjust position to this object's offset 
-		position -= _offset;
+		position = MathShit.AbsoluteToRelativePosition(position, _offset, loopLength);
 
 		//propagate the call down to every children
 		foreach (ISignalContent child in contents) {
@@ -82,7 +82,7 @@ public class SignalFragment : ISignalContainer, ISignalContent
 	{
 		if (newEntry != null)
 		{
-			newEntry.Offset = absolutePosition ? position : position - _offset;
+			newEntry.Offset = absolutePosition ? position : MathShit.AbsoluteToRelativePosition(position, _offset);
 			contents.Add(newEntry);
 		}
 		else { UnityEngine.Debug.LogWarning("Cannot SignalFragment.AddChildAt(null)"); }
