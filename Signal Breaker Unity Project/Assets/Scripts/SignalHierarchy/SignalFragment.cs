@@ -24,8 +24,6 @@ public class SignalFragment : ISignalContainer, ISignalContent
 //Implementación ISignalHandler
 	bool ISignalHandler.HasValuesAt (int position, uint loopLength, bool recursive)
 	{
-		return false;
-
 		position = MathShit.AbsoluteToRelativePosition(position, _offset, loopLength);
 
 
@@ -38,6 +36,8 @@ public class SignalFragment : ISignalContainer, ISignalContent
 				return true;
 			}
 		}
+
+		return false;
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		//[TO-DO] [TEST-ME]
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -118,10 +118,40 @@ public class SignalFragment : ISignalContainer, ISignalContent
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
 	}
 
-	List<ISignalContent> ISignalContainer.GetChildrenTouching (int position, List<ISignalContent> collectorArray, bool recursive)
+	//return every children with values at target position.
+	//if recursive = false will only include immediate children but values will be searched down to every depth
+	//Default overload, includes every children ISignalContent
+	List<ISignalContent> ISignalContainer.GetChildrenTouching (int position, List<ISignalContent> collectorArray, uint loopLength, bool recursive)
 	{
-		//[TO-DO]
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//[TO-DO] 
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
 		return null;
+	}
+	//Extra overload, includes only children that are containers. 
+	List<ISignalContainer> ISignalContainer.GetChildrenTouching (int position, List<ISignalContainer> collectorArray, uint loopLength, bool recursive)
+	{
+		position = MathShit.AbsoluteToRelativePosition(position, _offset, loopLength);
+
+		//ensure collectorArray exists
+		if (collectorArray == null) { collectorArray = new List<ISignalContainer>(); }
+
+		//save immediate children with values in target position
+		//also propagate the call if recursive = true
+		foreach (ISignalContainer child in contents)
+		{
+			if (child != null && child.HasValuesAt(position, loopLength, true))
+			{
+				collectorArray.Add(child);
+
+				if (recursive)
+				{
+					child.GetChildrenTouching(position, collectorArray, loopLength, true);
+				}
+			}
+		}
+
+		return collectorArray;
 	}
 
 	//Remove from this container a single, a list of, or every child

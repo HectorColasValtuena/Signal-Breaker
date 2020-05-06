@@ -13,7 +13,7 @@
 		//if a loopLength is provided calculate overflow
 		int loopedPosition = position % (int)loopLength;
 		//ensure loop-relative position is in the positive range
-		if (loopedPosition < 0) { loopedPosition += loopLength; }
+		if (loopedPosition < 0) { loopedPosition += (int)loopLength; }
 
 		return loopedPosition;
 
