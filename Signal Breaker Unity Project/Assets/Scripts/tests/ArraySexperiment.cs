@@ -1,4 +1,5 @@
 using UnityEngine;
+using SignalHierarchy;
 
 public class ArraySexperiment : MonoBehaviour
 {
