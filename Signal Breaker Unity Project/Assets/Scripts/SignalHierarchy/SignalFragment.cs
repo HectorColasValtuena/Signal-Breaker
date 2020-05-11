@@ -163,9 +163,7 @@ public class SignalFragment : ISignalContainer, ISignalContent
 	void ISignalContainer.RemoveChildren (List<ISignalContent> targets)
 	{
 		//remove every instance of content contained in targets
-		contents.RemoveAll((ISignalContent candidate) => {
-			return targets.Contains(candidate);
-		});
+		contents.RemoveAll((ISignalContent candidate) => { return targets.Contains(candidate); });
 	}
 	void ISignalContainer.RemoveChildren ()
 	{
