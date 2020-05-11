@@ -1,4 +1,7 @@
-﻿public class Signal //: ISignalContainer
+﻿namespace SignalHierarchy 
 {
+	public class Signal //: ISignalContainer
+	{
 
+	}
 }

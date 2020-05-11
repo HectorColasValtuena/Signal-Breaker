@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 
-public class SampleTrack
+namespace SignalHierarchy 
 {
-	private List<Sample> _sampleList;
+	public class SampleTrack
+	{
+		private List<Sample> _sampleList;
 
+	}
 }

@@ -1,9 +1,12 @@
-﻿public class Sample
+﻿namespace SignalHierarchy 
 {
-	public int type;
-
-	public Sample (int __type)
+	public class Sample
 	{
-		type = __type;
+		public int type;
+
+		public Sample (int __type)
+		{
+			type = __type;
+		}
 	}
 }
