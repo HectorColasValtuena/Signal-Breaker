@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class Sample : MonoBehaviour
+﻿public class Sample
 {
 	public int type;
 
