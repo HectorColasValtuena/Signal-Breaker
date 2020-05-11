@@ -20,7 +20,6 @@ public class Wave : ISignalContent
 
 //Implementación ISignalContent
 	int ISignalContent.Offset { get { return _offset; } set { _offset = value; } }
-	//int ISignalContent.Value { get { return _waveValue; } }
 //ENDOF Implementación ISignalContent
 
 //Implementación ISignalHandler
