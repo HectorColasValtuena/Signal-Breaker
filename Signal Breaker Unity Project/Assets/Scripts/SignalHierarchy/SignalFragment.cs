@@ -120,33 +120,25 @@ public class SignalFragment : ISignalContainer, ISignalContent
 
 	//return every children with values at target position.
 	//if recursive = false will only include immediate children but values will be searched down to every depth
-	//Default overload, includes every children ISignalContent
-	List<ISignalContent> ISignalContainer.GetChildrenTouching (int position, List<ISignalContent> collectorArray, uint loopLength, bool recursive)
+	List<TSignalHandler> ISignalContainer.GetChildrenTouching<TSignalHandler> (int position, List<TSignalHandler> collectorArray, uint loopLength, bool recursive)
 	{
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//[TO-DO] 
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
-		return null;
-	}
-	//Extra overload, includes only children that are containers. 
-	List<ISignalContainer> ISignalContainer.GetChildrenTouching (int position, List<ISignalContainer> collectorArray, uint loopLength, bool recursive)
-	{
-		position = MathShit.AbsoluteToRelativePosition(position, _offset, loopLength);
+		position = SignalHelper.AbsoluteToRelativePosition(position, _offset, loopLength);
 
 		//ensure collectorArray exists
-		if (collectorArray == null) { collectorArray = new List<ISignalContainer>(); }
+		if (collectorArray == null) { collectorArray = new List<TSignalHandler>(); }
 
 		//save immediate children with values in target position
 		//also propagate the call if recursive = true
-		foreach (ISignalContainer child in contents)
+		foreach (TSignalHandler child in contents)
 		{
-			if (child != null && child.HasValuesAt(position, loopLength, true))
+			ISignalHandler childHandler = child as ISignalHandler;
+			if (childHandler != null && childHandler.HasValuesAt(position, loopLength, true))
 			{
 				collectorArray.Add(child);
 
-				if (recursive)
+				if (recursive && (child as ISignalContainer) != null)
 				{
-					child.GetChildrenTouching(position, collectorArray, loopLength, true);
+					(child as ISignalContainer).GetChildrenTouching(position, collectorArray, loopLength, true);
 				}
 			}
 		}

@@ -13,10 +13,14 @@ public interface ISignalContainer : ISignalHandler
 	//Get all immediate children. Optionally choose only children that have values in target position.
 	//Will append items at the end of collectorArray. Will create an empty list if none.
 	//If recursive = true will recursively find grandchildren.
-	//GetChildrenTouching return value overload determines wether children that implement ISignalContainer or ISignalContent are returned
 	List<ISignalContent> GetChildren (List<ISignalContent> collectorArray = null, bool recursive = true);
-	List<ISignalContent> GetChildrenTouching (int position, List<ISignalContent> collectorArray = null, uint loopLength = 0, bool recursive = true);
-	List<ISignalContainer> GetChildrenTouching (int position, List<ISignalContainer> collectorArray = null, uint loopLength = 0, bool recursive = true);
+	//generic type TSignalHandler should be ISignalContent,ISignalContainer, ISignalHandler, or otherwise implement ISignalHandler
+	//it determines wether children that implement ISignalContainer, ISignalContent, or either are returned
+	List<TSignalHandler> GetChildrenTouching<TSignalHandler> (int position, List<TSignalHandler> collectorArray = null, uint loopLength = 0, bool recursive = true);
+
+	//List<ISignalContent> GetChildrenTouching (int position, List<ISignalContent> collectorArray = null, uint loopLength = 0, bool recursive = true);
+	//List<ISignalContainer> GetChildrenTouching (int position, List<ISignalContainer> collectorArray = null, uint loopLength = 0, bool recursive = true);
+	
 
 	//Remove from this container a list of or every child
 	//THIS DOES NOT DESTROY THE OBJECT - only the reference.
