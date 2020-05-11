@@ -1,15 +1,15 @@
 //[System.Serializable]
 public class Wave : ISignalContent
 {
-	//WaveValue objeto conteniendo las propiedades de una onda
-	private int waveValue;
+	//waveValue objeto conteniendo las propiedades de una onda
+	private int _waveValue;
 	private int _offset;
 
 
 //Constructor
 	public Wave (int __waveValue)
 	{
-		waveValue = __waveValue;
+		_waveValue = __waveValue;
 	}
 
 	public Wave (int __waveValue, int __offset) : this (__waveValue)
@@ -42,11 +42,8 @@ public class Wave : ISignalContent
 
 		//if this wave corresponds to target position, add its value to the stack
 		if ((this as ISignalHandler).HasValuesAt (position, loopLength))
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//[TO-DO] Is it really necessary to cast myself to access my own implementation of an interface?
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		{
-			collectorStack.AddValue(waveValue);
+			collectorStack.AddValue(_waveValue);
 		}
 
 		//return a reference to used collection stack
