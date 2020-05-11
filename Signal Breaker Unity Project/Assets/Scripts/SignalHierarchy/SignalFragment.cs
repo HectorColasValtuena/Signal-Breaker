@@ -2,7 +2,6 @@
 //Objects implementing only ISignalContent are considered value containers
 
 using System.Collections.Generic;
-//using UnityEngine;
 
 //[System.Serializable]
 public class SignalFragment : ISignalContainer, ISignalContent
