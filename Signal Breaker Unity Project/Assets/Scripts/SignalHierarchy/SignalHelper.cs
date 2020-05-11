@@ -1,4 +1,4 @@
-﻿public static class MathShit
+﻿public static class SignalHelper
 {
 	//removes offset from original position and calculates loop overflow (if loopLength >0)
 	public static int AbsoluteToRelativePosition (int position, int offset = 0, uint loopLength = 0)

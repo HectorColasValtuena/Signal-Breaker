@@ -20,13 +20,14 @@ public class Wave : ISignalContent
 
 //Implementación ISignalContent
 	int ISignalContent.Offset { get { return _offset; } set { _offset = value; } }
+	//int ISignalContent.Value { get { return _waveValue; } }
 //ENDOF Implementación ISignalContent
 
 //Implementación ISignalHandler
 	bool ISignalHandler.HasValuesAt (int position, uint loopLength, bool recursive)
 	{
 		//return true if this value's individual offset equals target position
-		return MathShit.AbsoluteToRelativePosition(position, _offset, loopLength) == 0;
+		return SignalHelper.AbsoluteToRelativePosition(position, _offset, loopLength) == 0;
 
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		//[TO-DO] [TEST-ME]

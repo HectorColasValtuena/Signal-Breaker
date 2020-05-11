@@ -24,7 +24,7 @@ public class SignalFragment : ISignalContainer, ISignalContent
 //Implementación ISignalHandler
 	bool ISignalHandler.HasValuesAt (int position, uint loopLength, bool recursive)
 	{
-		position = MathShit.AbsoluteToRelativePosition(position, _offset, loopLength);
+		position = SignalHelper.AbsoluteToRelativePosition(position, _offset, loopLength);
 
 
 		foreach (ISignalContent child in contents)
@@ -51,7 +51,7 @@ public class SignalFragment : ISignalContainer, ISignalContent
 		if (collectorStack == null)	{ collectorStack = new WaveStack(); }
 
 		//adjust position to this object's offset 
-		position = MathShit.AbsoluteToRelativePosition(position, _offset, loopLength);
+		position = SignalHelper.AbsoluteToRelativePosition(position, _offset, loopLength);
 
 		//propagate the call down to every children
 		foreach (ISignalContent child in contents) {
@@ -82,13 +82,13 @@ public class SignalFragment : ISignalContainer, ISignalContent
 	{
 		if (newEntry != null)
 		{
-			newEntry.Offset = absolutePosition ? position : MathShit.AbsoluteToRelativePosition(position, _offset);
+			newEntry.Offset = absolutePosition ? position : SignalHelper.AbsoluteToRelativePosition(position, _offset);
 			contents.Add(newEntry);
 		}
 		else { UnityEngine.Debug.LogWarning("Cannot SignalFragment.AddChildAt(null)"); }
 	}
 
-	//Get all immediate children. Optionally choose only children that have values in target position.
+	//Get all immediate children.
 	//If recursive = true will recursively find grandchildren.
 	List<ISignalContent> ISignalContainer.GetChildren (List<ISignalContent> collectorArray, bool recursive)
 	{
