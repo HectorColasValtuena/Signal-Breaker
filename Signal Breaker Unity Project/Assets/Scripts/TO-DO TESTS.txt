@@ -1,0 +1,96 @@
+static Class SignalHelper pending tests
+
+	> [PENDING] > AbsoluteToRelativePosition (int position, int offset = 0, uint loopLength = 0)
+		> Get position, NO offset, NO loopLength
+		> Get position, USING offset, NO loopLength
+		> Get position, NO offset, USING loopLength
+		> Get position, USING offset, USING loopLength
+
+ENDOF static Class SignalHelper
+
+Class Wave pending tests
+
+	> [PENDING] > Constructor
+		> Wave (int __waveValue) overload 
+		> Wave (int __waveValue, int __offset) overload
+
+	> [PENDING] > ISignalHandler interface
+		> [PENDING] > HasValuesAt (int position, uint loopLength, bool recursive)
+			> Check for THIS wave's position, NOT using loopLength
+			> Check for THIS wave's position, USING loopLength
+			> Check for NOT THIS wave's position
+
+		> [PENDING] > GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
+			> Get value corresponding to THIS wave's position, NOT using loopLength, PROVIDING collectorStack
+			> Get value corresponding to THIS wave's position, USING loopLength, PROVIDING collectorStack
+			> Get value corresponding to a DIFFERENT wave position, PROVIDING collectorStack
+			> Get value NOT PROVIDING collectorStack
+
+	> [PENDING] > ISignalContent interface
+		> [PENDING] > int Offset { get; set; }
+			> get
+			> set
+
+ENDOF Class Wave
+
+Class SignalFragment pending tests
+
+	> [PENDING] > Constructor
+		> SignalFragment () overload
+		> SignalFragment (int __offset) overload
+		> SignalFragment (List<ISignalContent> __contents) overload
+		> SignalFragment (int __offset, List<ISignalContent> __contents)
+
+	> [PENDING] > ISignalHandler interface
+		> [PENDING] > HasValuesAt (int position, uint loopLength, bool recursive)
+			> Check for an EXISTENT position, NOT using loopLength, NOT recursively
+			> Check for an EXISTENT position, NOT using loopLength, RECURSIVELY
+			> Check for an EXISTENT position, USING loopLength, RECURSIVELY
+			> Check for a NON-EXISTENT position, USING loopLength
+
+		> [PENDING] > GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
+			> Get a SINGLE EXISTENT value at position, NOT using loopLength, recursively
+			> Get MULTIPLE VALUES at position, in different loop multiples USING loopLength, recursively
+			> Check if an EXISTENT value at a deeper level is ignored if NON RECURSIVE
+			> NOT PROVIDING collectorStack, get EXISTENT values at position
+
+
+	> [PENDING] > ISignalContainer interface
+		> [PENDING] > AddChild (ISignalContent newEntry)
+			> Check if an EXISTENT child is properly added
+			> Check if a NULL child is properly ignored
+
+		> [PENDING] > AddChildAt (ISignalContent newEntry, int position, bool absolutePosition)
+			> Check wether an EXISTEN child is properly added at position, NON absolute
+			> Check wether an EXISTENT child is properly added at ABSOLUTE position
+			> Check wether a NULL child is properly ignored
+
+		> [PENDING] > GetChildren (List<ISignalContent> collectorArray, bool recursive)
+			> Get list of immediate children, NON-recursively, PROVIDING collectorArray
+			> Get full list of children, RECURSIVELY, PROVIDING collectorArray
+			> Get a list of children NOT PROVIDING collectoArray
+
+		> [PENDING] > GetChildrenTouching<TSignalHandler> (int position, List<TSignalHandler> collectorArray, uint loopLength, bool recursive)
+			> Get an EXISTENT child at position, NOT using loopLength, NON recursively
+			> Get an EXISTENT child at position, USING loopLength, NON recursively
+			> Get an EXISTENT child at position, NOT using loopLength, RECURSIVELY, WITHOUT deeper children
+			> Get an EXISTENT child at position, NOT using loopLength, RECURSIVELY, WITH deeper children
+			> Get an EXISTENT child at position, USING using loopLength, RECURSIVELY, WITH deeper children
+			> Get a NON-EXISTENT child at position, USING loopLength
+			> NOT PROVIDING collectorArray, get an EXISTENT child at position
+
+		> [PENDING] > RemoveChild (ISignalContent target)
+			> Check for removal of ONE child
+
+		> [PENDING] > RemoveChildren (List<ISignalContent> targets)
+			> Check for removal of SOME but NOT ALL children
+
+		> [PENDING] > RemoveChildren ()
+			> Check for removal of ALL children
+
+	> [PENDING] > ISignalContent interface
+		> [PENDING] > int Offset { get; set; }
+			> get
+			> set
+
+ENDOF Class SignalFragment
