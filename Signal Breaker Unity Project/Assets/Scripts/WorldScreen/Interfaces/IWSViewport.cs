@@ -1,6 +1,6 @@
 ﻿namespace WorldScreen
 {
-	public interface IViewport
+	public interface IWSViewport
 	{
 		//returns maximum size of the viewport as well as upper right limit. Lower left limit is 0,0.
 		UnityEngine.Vector2 viewportSize { get; }

@@ -2,7 +2,7 @@
 
 namespace WorldScreen {
 
-	public class ViewportTransformAnchored : MonoBehaviour, IViewport
+	public class ViewportTransformAnchored : MonoBehaviour, IWSViewport
 	{
 		public Transform lowerLimitTransform;
 		public Transform upperLimitTransform;
@@ -26,10 +26,10 @@ namespace WorldScreen {
 		}
 
 	//Implementación IViewport
-		Vector2 IViewport.viewportSize { get { return _viewportSize; } }
-		Transform IViewport.rootTransform { get { return transform; } }
+		Vector2 IWSViewport.viewportSize { get { return _viewportSize; } }
+		Transform IWSViewport.rootTransform { get { return transform; } }
 
-		bool IViewport.IsWithin (Vector2 point)
+		bool IWSViewport.IsWithin (Vector2 point)
 		{
 			return (
 				( point.x <= _viewportSize.x && point.x >= 0 ) &&
