@@ -9,6 +9,13 @@ namespace WorldScreen
 		void Start()
 		{
 			rectTransform = GetComponent<RectTransform>();
+
+			//* [DEBUG]
+			Debug.Log("Canvas viewport size: " + (this as IWSViewport).viewportSize);
+
+			Debug.Log("IsWithin(100,100): " + (this as IWSViewport).IsWithin(new Vector2 (100, 100)));
+			Debug.Log("IsWithin(200,200): " + (this as IWSViewport).IsWithin(new Vector2 (200, 200)));
+			//*
 		}
 
 
