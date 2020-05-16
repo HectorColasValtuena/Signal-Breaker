@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-namespace WorldScreen {
-
+namespace WorldScreen 
+{
 	public class ViewportTransformAnchored : MonoBehaviour, IWSViewport
 	{
 		public Transform lowerLimitTransform;
