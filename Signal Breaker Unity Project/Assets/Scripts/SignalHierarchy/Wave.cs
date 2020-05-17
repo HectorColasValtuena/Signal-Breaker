@@ -3,8 +3,8 @@ namespace SignalHierarchy
 	public class Wave : ISignalContent
 	{
 		//waveValue objeto conteniendo las propiedades de una onda
-		private int _waveValue;
-		private int _offset;
+		private int _waveValue = 0;
+		private int _offset = 0;
 
 
 	//Constructor
