@@ -129,34 +129,105 @@ namespace SignalHierarchyTests
         [Test]
         public void UTWaveGetValuesAt1 ()
         {
+            ISignalHandler TestItem1 = (new Wave (1) as ISignalHandler);
+            ISignalHandler TestItem2 = (new Wave (2, 2) as ISignalHandler);
+            ISignalHandler TestItem3 = (new Wave (3, 8) as ISignalHandler);
+            ISignalHandler TestItem4 = (new Wave (-2, -2) as ISignalHandler);
 
-
-            Assert.IsTrue(false); //unfinished indicator
+            Assert.AreEqual(
+                TestItem1.GetValuesAt(0, new WaveStack()).GetCombinedValue(),
+                1
+            );
+            Assert.AreEqual(
+                TestItem2.GetValuesAt(2, new WaveStack()).GetCombinedValue(),
+                2
+            );
+            Assert.AreEqual(
+                TestItem3.GetValuesAt(8, new WaveStack()).GetCombinedValue(),
+                3
+            );
+            Assert.AreEqual(
+                TestItem4.GetValuesAt(-2, new WaveStack()).GetCombinedValue(),
+                -2
+            );
         }
             //> Get value corresponding to THIS wave's position, USING loopLength, PROVIDING collectorStack
         [Test]
         public void UTWaveGetValuesAt2 ()
         {
+            ISignalHandler TestItem1 = (new Wave (1) as ISignalHandler);
+            ISignalHandler TestItem2 = (new Wave (2, 2) as ISignalHandler);
+            ISignalHandler TestItem3 = (new Wave (3, 8) as ISignalHandler);
+            ISignalHandler TestItem4 = (new Wave (-2, -2) as ISignalHandler);
 
-
-            Assert.IsTrue(false); //unfinished indicator
+            Assert.AreEqual(
+                TestItem1.GetValuesAt(12, new WaveStack(), 6).GetCombinedValue(),
+                1
+            );
+            Assert.AreEqual(
+                TestItem2.GetValuesAt(-4, new WaveStack(), 6).GetCombinedValue(),
+                2
+            );
+            Assert.AreEqual(
+                TestItem3.GetValuesAt(2, new WaveStack(), 6).GetCombinedValue(),
+                3
+            );
+            Assert.AreEqual(
+                TestItem4.GetValuesAt(4, new WaveStack(), 6).GetCombinedValue(),
+                -2
+            );
         }
             //> Get value corresponding to a DIFFERENT wave position, PROVIDING collectorStack
         [Test]
         public void UTWaveGetValuesAt3 ()
         {
+            ISignalHandler TestItem1 = (new Wave (1) as ISignalHandler);
+            ISignalHandler TestItem2 = (new Wave (2, 2) as ISignalHandler);
+            ISignalHandler TestItem3 = (new Wave (3, 8) as ISignalHandler);
+            ISignalHandler TestItem4 = (new Wave (-2, -2) as ISignalHandler);
 
-
-
-            Assert.IsTrue(false); //unfinished indicator
+            Assert.AreEqual(
+                TestItem1.GetValuesAt(3, new WaveStack()).GetCombinedValue(),
+                0
+            );
+            Assert.AreEqual(
+                TestItem2.GetValuesAt(3, new WaveStack()).GetCombinedValue(),
+                0
+            );
+            Assert.AreEqual(
+                TestItem3.GetValuesAt(6, new WaveStack(), 6).GetCombinedValue(),
+                0
+            );
+            Assert.AreEqual(
+                TestItem4.GetValuesAt(6, new WaveStack(), 6).GetCombinedValue(),
+                0
+            );
         }
             //> Get value NOT PROVIDING collectorStack
         [Test]
         public void UTWaveGetValuesAt4 ()
         {
-            
+            ISignalHandler TestItem1 = (new Wave (1) as ISignalHandler);
+            ISignalHandler TestItem2 = (new Wave (2, 2) as ISignalHandler);
+            ISignalHandler TestItem3 = (new Wave (3, 8) as ISignalHandler);
+            ISignalHandler TestItem4 = (new Wave (-2, -2) as ISignalHandler);
 
-            Assert.IsTrue(false); //unfinished indicator
+            Assert.AreEqual(
+                TestItem1.GetValuesAt(0).GetCombinedValue(),
+                1
+            );
+            Assert.AreEqual(
+                TestItem2.GetValuesAt(2).GetCombinedValue(),
+                2
+            );
+            Assert.AreEqual(
+                TestItem3.GetValuesAt(2, loopLength: 6).GetCombinedValue(),
+                3
+            );
+            Assert.AreEqual(
+                TestItem4.GetValuesAt(4, loopLength: 6).GetCombinedValue(),
+                -2
+            );
         }
     //ENDOF ISignalHandler interface
 
