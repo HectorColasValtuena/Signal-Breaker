@@ -44,3 +44,15 @@ TagManager:
   - name: hitlerlayer
     uniqueID: 563250443
     locked: 0
+  - name: UI-BaseLayer
+    uniqueID: 3438522481
+    locked: 0
+  - name: UI-Lines-FragmentLinkerLayer
+    uniqueID: 4109320727
+    locked: 0
+  - name: UI-TopLayer
+    uniqueID: 1527218673
+    locked: 0
+  - name: UI-Lines-WaveLayer
+    uniqueID: 2703128273
+    locked: 0
