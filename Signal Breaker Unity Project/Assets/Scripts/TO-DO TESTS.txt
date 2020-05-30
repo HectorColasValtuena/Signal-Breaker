@@ -61,7 +61,7 @@ Class SignalFragment pending tests
 			> Check if a NULL child is properly ignored
 
 		> [PENDING] > AddChildAt (ISignalContent newEntry, int position, bool absolutePosition)
-			> Check wether an EXISTEN child is properly added at position, NON absolute
+			> Check wether an EXISTENT child is properly added at position, NON absolute
 			> Check wether an EXISTENT child is properly added at ABSOLUTE position
 			> Check wether a NULL child is properly ignored
 
