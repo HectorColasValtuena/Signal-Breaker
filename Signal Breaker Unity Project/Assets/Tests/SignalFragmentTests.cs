@@ -4,6 +4,8 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+using SignalHierarchy;
+
 namespace SignalHierarchyTests
 {
     public class SignalFragmentTests
@@ -13,28 +15,49 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentConstructor1 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem = new SignalFragment();
+
+            Assert.IsNotNull(testItem);
+            Assert.AreEqual((testItem as ISignalContent).Offset, 0);
         }
 
         //> Constructor SignalFragment (int __offset)
         [Test]
         public void UTSignalFragmentConstructor2 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem = new SignalFragment(3);
+
+            Assert.IsNotNull(testItem);
+            Assert.AreEqual((testItem as ISignalContent).Offset, 3);
         }
 
         //> Constructor SignalFragment (List<ISignalContent> __contents)
         [Test]
         public void UTSignalFragmentConstructor3 ()
         {
-            Assert.IsTrue(false);
+            List<ISignalContent> newContents = new List<ISignalContent>{new Wave(1), new Wave(2, 2)};
+            SignalFragment testItem = new SignalFragment(newContents);
+
+            Assert.IsNotNull(testItem);
+            Assert.IsTrue((testItem as ISignalHandler).HasValuesAt(0));
+            Assert.IsTrue((testItem as ISignalHandler).HasValuesAt(2));
+            Assert.IsFalse((testItem as ISignalHandler).HasValuesAt(3));
+            Assert.IsFalse((testItem as ISignalHandler).HasValuesAt(5));
         }
 
         //> Constructor SignalFragment (int __offset, List<ISignalContent> __contents)
         [Test]
         public void UTSignalFragmentConstructor4 ()
         {
-            Assert.IsTrue(false);
+            List<ISignalContent> newContents = new List<ISignalContent>{new Wave(1), new Wave(2, 2)};
+            SignalFragment testItem = new SignalFragment(3, newContents);
+
+            Assert.IsNotNull(testItem);
+            Assert.AreEqual((testItem as ISignalContent).Offset, 3);
+            Assert.IsTrue((testItem as ISignalHandler).HasValuesAt(3));
+            Assert.IsTrue((testItem as ISignalHandler).HasValuesAt(5));
+            Assert.IsFalse((testItem as ISignalHandler).HasValuesAt(0));
+            Assert.IsFalse((testItem as ISignalHandler).HasValuesAt(2));
         }
     //ENDOF Constructor
 
