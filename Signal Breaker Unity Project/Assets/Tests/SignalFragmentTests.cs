@@ -63,32 +63,160 @@ namespace SignalHierarchyTests
 
     //ISignalHandler interface
         //> HasValuesAt (int position, uint loopLength, bool recursive)
-            //> Check for an EXISTENT position, NOT using loopLength, NOT recursively
+            //> Check for a (non)EXISTENT position, NOT using loopLength, NOT recursively
         [Test]
         public void UTSignalFragmentHasValuesAt1 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(0, 0),
+                    new Wave(2, 2)
+                }
+            );
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(0));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(2));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(1));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(-4));
+
+            SignalFragment testItem2 = new SignalFragment(3, 
+                new List<ISignalContent> {
+                    new Wave(8, 5),
+                    new Wave(1, -2)
+                }
+            );
+            Assert.IsFalse((testItem2 as ISignalHandler).HasValuesAt(-2));
+            Assert.IsFalse((testItem2 as ISignalHandler).HasValuesAt(5));
+            Assert.IsTrue((testItem2 as ISignalHandler).HasValuesAt(8));
+            Assert.IsTrue((testItem2 as ISignalHandler).HasValuesAt(1));
+
+            SignalFragment testItem3 = new SignalFragment(-2, 
+                new List<ISignalContent> {
+                    new Wave(0, 2),
+                    new Wave(-4, -2),
+                    new Wave(5, 7)
+                }
+            );
+            Assert.IsTrue((testItem3 as ISignalHandler).HasValuesAt(0));
+            Assert.IsTrue((testItem3 as ISignalHandler).HasValuesAt(-4));
+            Assert.IsTrue((testItem3 as ISignalHandler).HasValuesAt(5));
+            Assert.IsFalse((testItem3 as ISignalHandler).HasValuesAt(2));
+            Assert.IsFalse((testItem3 as ISignalHandler).HasValuesAt(7));
         }
 
-            //> Check for an EXISTENT position, NOT using loopLength, RECURSIVELY
+            //> Check for a (non)EXISTENT position, USING loopLength, NOT recursively
         [Test]
         public void UTSignalFragmentHasValuesAt2 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(-3, -3),
+                    new Wave(6, 6),
+                    new Wave(8, 8)
+                }
+            );
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(-4, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(3, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(0, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(2, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(6, 7));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(1, 7));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(1, 6));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(-4));
+
+            SignalFragment testItem2 = new SignalFragment(-3, 
+                new List<ISignalContent> {
+                    new Wave(2, 5),
+                    new Wave(-5, -2)
+                }
+            );
+            Assert.IsTrue((testItem2 as ISignalHandler).HasValuesAt(2, 6));
+            Assert.IsTrue((testItem2 as ISignalHandler).HasValuesAt(-4, 6));
+            Assert.IsTrue((testItem2 as ISignalHandler).HasValuesAt(14, 6));
+            Assert.IsTrue((testItem2 as ISignalHandler).HasValuesAt(1, 6));
+            Assert.IsFalse((testItem2 as ISignalHandler).HasValuesAt(-4));
+            Assert.IsFalse((testItem2 as ISignalHandler).HasValuesAt(3, 6));
+            Assert.IsFalse((testItem2 as ISignalHandler).HasValuesAt(4, 6));
+            Assert.IsFalse((testItem2 as ISignalHandler).HasValuesAt(5, 6));
+            Assert.IsFalse((testItem2 as ISignalHandler).HasValuesAt(0, 6));
+
+            SignalFragment testItem3 = new SignalFragment(2, 
+                new List<ISignalContent> {
+                    new Wave(2, 0),
+                    new Wave(-2, -4),
+                    new Wave(7, 5)
+                }
+            );
+            Assert.IsTrue((testItem3 as ISignalHandler).HasValuesAt(2, 6));
+            Assert.IsTrue((testItem3 as ISignalHandler).HasValuesAt(4, 6));
+            Assert.IsTrue((testItem3 as ISignalHandler).HasValuesAt(1, 6));
+            Assert.IsFalse((testItem3 as ISignalHandler).HasValuesAt(3, 6));
+            Assert.IsFalse((testItem3 as ISignalHandler).HasValuesAt(5, 6));
         }
 
-            //> Check for an EXISTENT position, USING loopLength, RECURSIVELY
+            //> Check for a (non)EXISTENT position, NOT using loopLength, RECURSIVELY
         [Test]
         public void UTSignalFragmentHasValuesAt3 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new SignalFragment(0, new List<ISignalContent> {
+                        new Wave(1, 0),
+                        new Wave(1, 1)
+                    }),
+                    new SignalFragment(3, new List<ISignalContent> {
+                        new Wave(3, 0),
+                        new Wave(1, 3)
+                    }),
+                    new SignalFragment(6, new List<ISignalContent> {
+                        new Wave(4, 4),
+                        new Wave(4, -2),
+                    })
+                }
+            );
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(0));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(1));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(3));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(4));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(10));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(2));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(5));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(0, recursive: false));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(1, recursive: false));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(3, recursive: false));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(4, recursive: false));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(10, recursive: false));
         }
 
-            //> Check for a NON-EXISTENT position, USING loopLength
+            //> Check for a (non)EXISTENT position, USING loopLength, RECURSIVELY
         [Test]
         public void UTSignalFragmentHasValuesAt4 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new SignalFragment(-3, new List<ISignalContent> {
+                        new Wave(-3, 0),
+                        new Wave(1, 2)
+                    }),
+                    new SignalFragment(6, new List<ISignalContent> {
+                        new Wave(4, 4),
+                        new Wave(4, 8),
+                    })
+                }
+            );
+
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(0, 6));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(1, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(2, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(3, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(4, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(5, 6));
+            Assert.IsTrue((testItem1 as ISignalHandler).HasValuesAt(0, 6, recursive: false));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(2, 6, recursive: false));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(3, 6, recursive: false));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(4, 6, recursive: false));
+            Assert.IsFalse((testItem1 as ISignalHandler).HasValuesAt(5, 6, recursive: false));
         }
 
 

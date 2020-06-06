@@ -44,6 +44,7 @@ Class SignalFragment pending tests
 	> [PENDING] > ISignalHandler interface
 		> [PENDING] > HasValuesAt (int position, uint loopLength, bool recursive)
 			> Check for an EXISTENT position, NOT using loopLength, NOT recursively
+			> Check for an EXISTENT position, USING loopLength, NOT recursively
 			> Check for an EXISTENT position, NOT using loopLength, RECURSIVELY
 			> Check for an EXISTENT position, USING loopLength, RECURSIVELY
 			> Check for a NON-EXISTENT position, USING loopLength
