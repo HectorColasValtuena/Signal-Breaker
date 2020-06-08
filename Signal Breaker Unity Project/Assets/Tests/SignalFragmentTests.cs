@@ -221,32 +221,98 @@ namespace SignalHierarchyTests
 
 
         //> GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
-            //> Get a SINGLE EXISTENT value at position, NOT using loopLength, recursively
+            //> Get a SINGLE and MULTIPLE EXISTENT values at position, NOT using loopLength, recursively
         [Test]
         public void UTSignalFragmentGetValuesAt1 ()
         {
-            Assert.IsTrue(false);
+            
+            SignalFragment testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new SignalFragment(-3, new List<ISignalContent> {
+                        new Wave(1, 3),
+                        new Wave(1, 5)
+                    }),
+                    new SignalFragment(6, new List<ISignalContent> {
+                        new Wave(1, 0),
+                        new Wave(1, 8),
+                    })
+                }
+            );
+            
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: false).GetCombinedValue());
+            Assert.AreEqual(0, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: false).GetCombinedValue());
+            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: true).GetCombinedValue());
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: true).GetCombinedValue());
         }
 
             //> Get MULTIPLE VALUES at position, in different loop multiples USING loopLength, recursively
         [Test]
         public void UTSignalFragmentGetValuesAt2 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new SignalFragment(-3, new List<ISignalContent> {
+                        new Wave(1, 3),
+                        new Wave(1, -1)
+                    }),
+                    new SignalFragment(6, new List<ISignalContent> {
+                        new Wave(1, 0),
+                        new Wave(1, 8),
+                    })
+                }
+            );
+            
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, loopLength: 6, recursive: false).GetCombinedValue());
+            Assert.AreEqual(0, (testItem1 as ISignalHandler).GetValuesAt(2, loopLength: 6, recursive: false).GetCombinedValue());
+            Assert.AreEqual(3, (testItem1 as ISignalHandler).GetValuesAt(0, loopLength: 6, recursive: true).GetCombinedValue());
+            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(2, loopLength: 6, recursive: true).GetCombinedValue());
         }
 
             //> Check if an EXISTENT value at a deeper level is ignored if NON RECURSIVE
         [Test]
         public void UTSignalFragmentGetValuesAt3 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, 2),
+                    new SignalFragment(0, new List<ISignalContent> {
+                        new Wave(1, 0),
+                        new Wave(1, 2)
+                    })
+                }
+            );
+
+            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(0).GetCombinedValue());
+            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(2).GetCombinedValue());
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: false).GetCombinedValue());
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: false).GetCombinedValue());
         }
 
-            //> NOT PROVIDING collectorStack, get EXISTENT values at position
+            //> PROVIDING collectorStack, get EXISTENT values at position
         [Test]
         public void UTSignalFragmentGetValuesAt4 ()
         {
-            Assert.IsTrue(false);
+            SignalFragment testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, 2),
+                    new SignalFragment(0, new List<ISignalContent> {
+                        new Wave(1, 2)
+                    })
+                }
+            );
+
+
+            ISignalStack testCollector = new WaveStack();
+            (testItem1 as ISignalHandler).GetValuesAt(0, collectorStack: testCollector);
+            Assert.AreEqual(1, testCollector.GetCombinedValue());
+
+            testCollector = new WaveStack();
+            (testItem1 as ISignalHandler).GetValuesAt(2, collectorStack: testCollector);
+            Assert.AreEqual(2, testCollector.GetCombinedValue());
         }
 
 

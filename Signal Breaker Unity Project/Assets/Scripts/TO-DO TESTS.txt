@@ -43,14 +43,13 @@ Class SignalFragment pending tests
 
 	> [PENDING] > ISignalHandler interface
 		> [PENDING] > HasValuesAt (int position, uint loopLength, bool recursive)
-			> Check for an EXISTENT position, NOT using loopLength, NOT recursively
-			> Check for an EXISTENT position, USING loopLength, NOT recursively
-			> Check for an EXISTENT position, NOT using loopLength, RECURSIVELY
-			> Check for an EXISTENT position, USING loopLength, RECURSIVELY
-			> Check for a NON-EXISTENT position, USING loopLength
+			> Check for a (non)EXISTENT position, NOT using loopLength, NOT recursively
+			> Check for a (non)EXISTENT position, USING loopLength, NOT recursively
+			> Check for a (non)EXISTENT position, NOT using loopLength, RECURSIVELY
+			> Check for a (non)EXISTENT position, USING loopLength, RECURSIVELY
 
 		> [PENDING] > GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
-			> Get a SINGLE EXISTENT value at position, NOT using loopLength, recursively
+			> Get a SINGLE and MULTIPLE EXISTENT values at position, NOT using loopLength, recursively
 			> Get MULTIPLE VALUES at position, in different loop multiples USING loopLength, recursively
 			> Check if an EXISTENT value at a deeper level is ignored if NON RECURSIVE
 			> NOT PROVIDING collectorStack, get EXISTENT values at position
