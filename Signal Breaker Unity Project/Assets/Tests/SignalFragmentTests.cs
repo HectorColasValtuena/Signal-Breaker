@@ -437,7 +437,27 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentRemoveChild1 ()
         {
-            Assert.IsTrue(false);
+            Wave waveTestItem = new Wave(1, 0);
+            Wave waveTestItem2 = new Wave(1, 0);
+            ISignalContainer testItem1 = (new SignalFragment( 
+                new List<ISignalContent> {
+                    waveTestItem,
+                    waveTestItem2,
+                    new SignalFragment(0, new List<ISignalContent> {
+                        new Wave(1, 1)
+                    }),
+                    new SignalFragment(3, new List<ISignalContent> {
+                        new Wave(1, 8),
+                    }),
+                    waveTestItem2,
+                }
+            ) as ISignalContainer);
+
+            Assert.AreEqual(testItem1.GetChildren(recursive: false).Count, 5);
+            testItem1.RemoveChild(waveTestItem as ISignalContent);
+            Assert.AreEqual(testItem1.GetChildren(recursive: false).Count, 4);
+            testItem1.RemoveChild(waveTestItem2 as ISignalContent);
+            Assert.AreEqual(testItem1.GetChildren(recursive: false).Count, 2);
         }
 
         //> RemoveChildren (List<ISignalContent> targets)
@@ -445,7 +465,23 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentRemoveChildren1 ()
         {
-            Assert.IsTrue(false);
+            List<ISignalContent> testItemList = new List<ISignalContent> { new Wave(1, 0), new Wave(1, 2) };
+            ISignalContainer testItem1 = (new SignalFragment( 
+                new List<ISignalContent> {
+                    testItemList[0],
+                    new SignalFragment(0, new List<ISignalContent> {
+                        new Wave(1, 1)
+                    }),
+                    new SignalFragment(3, new List<ISignalContent> {
+                        new Wave(1, 8),
+                    }),
+                    testItemList[1],
+                }
+            ) as ISignalContainer);
+
+            Assert.AreEqual(testItem1.GetChildren(recursive: false).Count, 4);
+            testItem1.RemoveChildren(testItemList);
+            Assert.AreEqual(testItem1.GetChildren(recursive: false).Count, 2);
         }
 
         //> RemoveChildren ()
@@ -453,7 +489,22 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentRemoveChildren2 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = (new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, 2),
+                    new SignalFragment(0, new List<ISignalContent> {
+                        new Wave(1, 1)
+                    }),
+                    new SignalFragment(3, new List<ISignalContent> {
+                        new Wave(1, 8),
+                    }),
+                }
+            ) as ISignalContainer);
+
+            Assert.AreEqual(testItem1.GetChildren(recursive: false).Count, 4);
+            testItem1.RemoveChildren();
+            Assert.AreEqual(testItem1.GetChildren(recursive: false).Count, 0);
         }
 
     //ENDOF ISignalContainer interface
@@ -463,7 +514,16 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentOffset1 ()
         {
-            Assert.IsTrue(false);
+            Assert.AreEqual((new SignalFragment() as ISignalContent).Offset, 0);
+
+            ISignalContent testItem1 = (new SignalFragment(1) as ISignalContent);
+            ISignalContent testItem2 = (new SignalFragment(2, null) as ISignalContent);
+
+            Assert.AreEqual(testItem1.Offset, 1);
+            Assert.AreEqual(testItem2.Offset, 2);
+
+            testItem1.Offset = 4;
+            Assert.AreEqual(testItem1.Offset, 4);
         }
 
     //ENDOF ISignalContent interface
