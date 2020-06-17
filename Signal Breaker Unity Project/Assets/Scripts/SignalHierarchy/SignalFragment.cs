@@ -121,19 +121,19 @@ namespace SignalHierarchy
 
 		//return every children with values at target position.
 		//if recursive = false will only include immediate children but values will be searched down to every depth
-		List<TSignalHandler> ISignalContainer.GetChildrenTouching<TSignalHandler> (int position, List<TSignalHandler> collectorArray, uint loopLength, bool recursive)
+		List<ISignalContent> ISignalContainer.GetChildrenTouching (int position, List<ISignalContent> collectorArray, uint loopLength, bool recursive)
 		{
 			position = SignalHelper.AbsoluteToRelativePosition(position, _offset, loopLength);
 
 			//ensure collectorArray exists
-			if (collectorArray == null) { collectorArray = new List<TSignalHandler>(); }
+			if (collectorArray == null) { collectorArray = new List<ISignalContent>(); }
 
 			//save immediate children with values in target position
 			//also propagate the call if recursive = true
-			foreach (TSignalHandler child in contents)
+			foreach (ISignalContent child in contents)
 			{
 				ISignalHandler childHandler = child as ISignalHandler;
-				if (childHandler != null && childHandler.HasValuesAt(position, loopLength, true))
+				if (child != null && childHandler != null && childHandler.HasValuesAt(position, loopLength, true))
 				{
 					collectorArray.Add(child);
 
