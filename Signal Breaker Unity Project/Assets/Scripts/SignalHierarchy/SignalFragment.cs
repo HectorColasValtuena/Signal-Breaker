@@ -76,7 +76,7 @@ namespace SignalHierarchy
 		void ISignalContainer.AddChild (ISignalContent newEntry)
 		{
 			if (newEntry != null) { contents.Add(newEntry); }
-			else { UnityEngine.Debug.LogWarning("Cannot SignalFragment.AddChildAt(null)"); }
+			//else { UnityEngine.Debug.LogWarning("Cannot SignalFragment.AddChildAt(null)"); }
 		}
 		void ISignalContainer.AddChildAt (ISignalContent newEntry, int position, bool absolutePosition)
 		{
@@ -85,7 +85,7 @@ namespace SignalHierarchy
 				newEntry.Offset = absolutePosition ? position : SignalHelper.AbsoluteToRelativePosition(position, _offset);
 				contents.Add(newEntry);
 			}
-			else { UnityEngine.Debug.LogWarning("Cannot SignalFragment.AddChildAt(null)"); }
+			//else { UnityEngine.Debug.LogWarning("Cannot SignalFragment.AddChildAt(null)"); }
 		}
 
 		//Get all immediate children.
@@ -102,11 +102,12 @@ namespace SignalHierarchy
 			if (recursive)
 			{
 				//access children as ISignalContainer and propagate request only to fitting children
-				foreach (ISignalContainer child in contents)
+				foreach (ISignalContent child in contents)
 				{
-					if (child != null)
+					ISignalContainer containerChild = child as ISignalContainer;
+					if (containerChild != null)
 					{
-						child.GetChildren(collectorArray, recursive);
+						containerChild.GetChildren(collectorArray, recursive);
 					}
 				}
 			}
