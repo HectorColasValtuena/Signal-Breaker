@@ -325,14 +325,40 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentAddChild1 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(1, 0)
+                }
+            ) as ISignalContainer;
+            ISignalContent testWave1 = new Wave(1, 2) as ISignalContent;
+
+            Assert.IsTrue(testItem1.HasValuesAt(0));
+            Assert.IsFalse(testItem1.HasValuesAt(2));
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 1);
+
+            testItem1.AddChild(testWave1);
+
+            Assert.IsTrue(testItem1.HasValuesAt(0));
+            Assert.IsTrue(testItem1.HasValuesAt(2));
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 2);
         }
 
             //> Check if a NULL child is properly ignored
         [Test]
         public void UTSignalFragmentAddChild2 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment(0, 
+                new List<ISignalContent> {
+                    new Wave(1, 0)
+                }
+            ) as ISignalContainer;
+
+            Assert.IsTrue(testItem1.HasValuesAt(0));
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 1);
+
+            testItem1.AddChild(null);
+
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 1);
         }
 
 
@@ -341,21 +367,66 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentAddChildAt1 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment(1, 
+                new List<ISignalContent> {
+                    new Wave(1, 0)
+                }
+            ) as ISignalContainer;
+            ISignalContent testWave1 = new Wave(1, -2) as ISignalContent;
+
+            Assert.IsTrue(testItem1.HasValuesAt(1));
+            Assert.IsFalse(testItem1.HasValuesAt(2));
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 1);
+
+            testItem1.AddChildAt(testWave1, 2);
+
+            Assert.IsTrue(testItem1.HasValuesAt(1));
+            Assert.IsTrue(testItem1.HasValuesAt(2));
+            Assert.IsFalse(testItem1.HasValuesAt(-1));
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 2);
         }
 
             //> Check wether an EXISTENT child is properly added at ABSOLUTE position
         [Test]
         public void UTSignalFragmentAddChildAt2 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment(1, 
+                new List<ISignalContent> {
+                    new Wave(1, 0)
+                }
+            ) as ISignalContainer;
+            ISignalContent testWave1 = new Wave(1, -2) as ISignalContent;
+
+            Assert.IsTrue(testItem1.HasValuesAt(1));
+            Assert.IsFalse(testItem1.HasValuesAt(3));
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 1);
+
+            testItem1.AddChildAt(testWave1, 2, true);
+
+            Assert.IsTrue(testItem1.HasValuesAt(1));
+            Assert.IsTrue(testItem1.HasValuesAt(3));
+            Assert.IsFalse(testItem1.HasValuesAt(-2));
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 2);
         }
 
             //> Check wether a NULL child is properly ignored        
         [Test]
         public void UTSignalFragmentAddChildAt3 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment(1, 
+                new List<ISignalContent> {
+                    new Wave(1, 0)
+                }
+            ) as ISignalContainer;
+
+            Assert.IsTrue(testItem1.HasValuesAt(1));
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>()).Count, 1);
+
+            testItem1.AddChildAt(null, 2, true);
+
+            Assert.IsTrue(testItem1.HasValuesAt(1));
+
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>(), false).Count, 1);
         }
 
 
@@ -364,21 +435,52 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentGetChildren1 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, 0),
+                    new SignalFragment(new List<ISignalContent> {
+                        new Wave(1, 0),
+                        new SignalFragment(new List<ISignalContent> {
+                            new Wave(1, 0)
+                        }),
+                        new SignalFragment(new List<ISignalContent> {
+                            new Wave(1, 0)
+                        })
+                    }),
+                    new SignalFragment(new List<ISignalContent> {
+                        new Wave(1, 0)
+                    })
+                }
+            ) as ISignalContainer;
+
+            Assert.AreEqual(testItem1.GetChildren(new List<ISignalContent>(), false).Count, 4);
         }
 
-            //> Get full list of children, RECURSIVELY, PROVIDING collectorArray
+            //> Get full list of children, RECURSIVELY, NOT PROVIDING collectorArray
         [Test]
         public void UTSignalFragmentGetChildren2 ()
         {
-            Assert.IsTrue(false);
-        }
+            ISignalContainer testItem1 = new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, 0),
+                    new SignalFragment(new List<ISignalContent> {
+                        new Wave(1, 0),
+                        new SignalFragment(new List<ISignalContent> {
+                            new Wave(1, 0)
+                        }),
+                        new SignalFragment(new List<ISignalContent> {
+                            new Wave(1, 0)
+                        })
+                    }),
+                    new SignalFragment(new List<ISignalContent> {
+                        new Wave(1, 0)
+                    })
+                }
+            ) as ISignalContainer;
 
-            //> Get a list of children NOT PROVIDING collectoArray
-        [Test]
-        public void UTSignalFragmentGetChildren3 ()
-        {
-            Assert.IsTrue(false);
+            Assert.AreEqual(testItem1.GetChildren().Count, 10);
         }
 
         //> GetChildrenTouching<TSignalHandler> (int position, List<TSignalHandler> collectorArray, uint loopLength, bool recursive)
@@ -386,7 +488,31 @@ namespace SignalHierarchyTests
         [Test]
         public void UTSignalFragmentGetChildrenTouching1 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, 3),
+                    new SignalFragment(new List<ISignalContent> {
+                        new Wave(1, 3),
+                        new SignalFragment(new List<ISignalContent> {
+                            new Wave(1, 0)
+                        }),
+                        new SignalFragment(2, new List<ISignalContent> {
+                            new Wave(1, 0),
+                            new Wave(1, 1)
+                        })
+                    }),
+                    new SignalFragment(2, new List<ISignalContent> {
+                        new Wave(1, 0),
+                        new Wave(1, 1)
+                    }),
+                    new SignalFragment(1, new List<ISignalContent> {
+                        new Wave(1,0)
+                    })
+                }
+            ) as ISignalContainer;
+
+            Assert.AreEqual(3 , testItem1.GetChildrenTouching(3, recursive: false).Count);
         }
 
             //> Get an EXISTENT child at position, USING loopLength, NON recursively
