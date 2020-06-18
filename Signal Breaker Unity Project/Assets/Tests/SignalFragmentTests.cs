@@ -515,46 +515,141 @@ namespace SignalHierarchyTests
             Assert.AreEqual(3 , testItem1.GetChildrenTouching(3, recursive: false).Count);
         }
 
-            //> Get an EXISTENT child at position, USING loopLength, NON recursively
+            //> Get an EXISTENT and NON EXISTENT child at position, USING loopLength, NON recursively
         [Test]
         public void UTSignalFragmentGetChildrenTouching2 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, -3), //si
+                    new SignalFragment(6, new List<ISignalContent> {//si
+                        new Wave(1, 3), //si
+                        new SignalFragment(-2, new List<ISignalContent> {//si
+                            new Wave(1, -1) //si
+                        }),
+                        new SignalFragment(2, new List<ISignalContent> {
+                            new Wave(1, 0),
+                            new Wave(1, 2)
+                        })
+                    }),
+                    new SignalFragment(24, new List<ISignalContent> {//si
+                        new Wave(1, 0),
+                        new Wave(1, 27) //si
+                    }),
+                    new SignalFragment(3, new List<ISignalContent> {
+                        new Wave(1,3)
+                    })
+                }
+            ) as ISignalContainer;
+
+            Assert.AreEqual(3, testItem1.GetChildrenTouching(3, loopLength: 6, recursive: false).Count);
+
+            //non-existent
+            ISignalContainer testItem2 = new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, -3), 
+                    new SignalFragment(3, new List<ISignalContent> {
+                        new Wave(1, 5),
+                        new Wave(1, 7),
+                    }),
+                    new SignalFragment(24, new List<ISignalContent> {
+                        new Wave(1, 11),
+                    }),
+                    new SignalFragment(-9, new List<ISignalContent> {
+                         new Wave(1, -5),
+                    })
+                }
+            ) as ISignalContainer;
+
+            Assert.AreEqual(0, testItem2.GetChildrenTouching(1, loopLength: 6, recursive: true).Count);
         }
 
             //> Get an EXISTENT child at position, NOT using loopLength, RECURSIVELY, WITHOUT deeper children
         [Test]
         public void UTSignalFragmentGetChildrenTouching3 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, -3), //si
+                    new SignalFragment(3, new List<ISignalContent> {//si
+    
+                    }),
+                    new SignalFragment(24, new List<ISignalContent> {//si
+                        
+                    }),
+                    new SignalFragment(3, new List<ISignalContent> {
+                        
+                    })
+                }
+            ) as ISignalContainer;
+
+            Assert.AreEqual(1, testItem1.GetChildrenTouching(3, loopLength: 6, recursive: true).Count);
         }
 
-            //> Get an EXISTENT child at position, NOT using loopLength, RECURSIVELY, WITH deeper children
+            //> Get an EXISTENT child at position, USING and NOT using loopLength, RECURSIVELY, WITH deeper children
         [Test]
         public void UTSignalFragmentGetChildrenTouching4 ()
         {
-            Assert.IsTrue(false);
+            ISignalContainer testItem1 = new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, -3), //si
+                    new SignalFragment(6, new List<ISignalContent> {//si
+                        new Wave(1, 9), //si
+                        new SignalFragment(-2, new List<ISignalContent> {//si
+                            new Wave(1, -1) //si
+                        }),
+                        new SignalFragment(2, new List<ISignalContent> {
+                            new Wave(1, 0),
+                            new Wave(1, 2)
+                        })
+                    }),
+                    new SignalFragment(24, new List<ISignalContent> {//si
+                        new Wave(1, 0),
+                        new Wave(1, 27) //si
+                    }),
+                    new SignalFragment(3, new List<ISignalContent> {
+                        new Wave(1,3)
+                    })
+                }
+            ) as ISignalContainer;
+
+            Assert.AreEqual(3, testItem1.GetChildrenTouching(3, recursive: true).Count);
+            Assert.AreEqual(7, testItem1.GetChildrenTouching(3, loopLength: 6, recursive: true).Count);
         }
 
-            //> Get an EXISTENT child at position, USING using loopLength, RECURSIVELY, WITH deeper children
-        [Test]
-        public void UTSignalFragmentGetChildrenTouching5 ()
-        {
-            Assert.IsTrue(false);
-        }
-
-            //> Get a NON-EXISTENT child at position, USING loopLength
+            //> PROVIDING collectorArray, get an EXISTENT child at position        
         [Test]
         public void UTSignalFragmentGetChildrenTouching6 ()
         {
-            Assert.IsTrue(false);
-        }
+            ISignalContainer testItem1 = new SignalFragment( 
+                new List<ISignalContent> {
+                    new Wave(1, 0),
+                    new Wave(1, 3),
+                    new SignalFragment(new List<ISignalContent> {
+                        new Wave(1, 3),
+                        new SignalFragment(new List<ISignalContent> {
+                            new Wave(1, 0)
+                        }),
+                        new SignalFragment(2, new List<ISignalContent> {
+                            new Wave(1, 0),
+                            new Wave(1, 1)
+                        })
+                    }),
+                    new SignalFragment(2, new List<ISignalContent> {
+                        new Wave(1, 0),
+                        new Wave(1, 1)
+                    }),
+                    new SignalFragment(1, new List<ISignalContent> {
+                        new Wave(1,0)
+                    })
+                }
+            ) as ISignalContainer;
 
-            //> NOT PROVIDING collectorArray, get an EXISTENT child at position        
-        [Test]
-        public void UTSignalFragmentGetChildrenTouching7 ()
-        {
-            Assert.IsTrue(false);
+            Assert.AreEqual(5, testItem1.GetChildrenTouching(3, recursive: false, collectorArray: new List<ISignalContent>{new Wave(1, 0), new Wave(1, 3)}).Count);
         }
 
 
