@@ -746,15 +746,6 @@ namespace SignalHierarchyTests
             testItem1.Offset = 4;
             Assert.AreEqual(testItem1.Offset, 4);
         }
-
-    //ENDOF ISignalContent interface
-
-//Delete me when done
-        [Test]
-        public void SignalFragmentUnfinishedMarker()
-        {
-            Assert.IsTrue(false);
-        }
-//Delete me when done
     }
+    //ENDOF ISignalContent interface
 }
