@@ -8,8 +8,9 @@ namespace SignalHierarchy
 	public interface ISignalContainer : ISignalHandler
 	{
 		//Adjust offset and Re-organize contents so that the earliest element sits at position 0.
+		//Forcibly acts recursively
 		//Returns this element’s new offset
-		int AutoRebaseOffsets ();
+		void AutoRebaseOffsets ();
 
 		//Insert newEntry object.
 		//If a position is given updates child offset. If absolutePosition = false, apply this container’s offset to child position.

@@ -38,9 +38,6 @@ namespace SignalHierarchy
 			}
 
 			return false;
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			//[TO-DO] [TEST-ME]
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 
 		ISignalStack ISignalHandler.GetValuesAt (int position, ISignalStack collectorStack, uint loopLength, bool recursive)
@@ -54,7 +51,8 @@ namespace SignalHierarchy
 			position = SignalHelper.AbsoluteToRelativePosition(position, _offset, loopLength);
 
 			//propagate the call down to every children
-			foreach (ISignalContent child in contents) {
+			foreach (ISignalContent child in contents) 
+			{
 				//propagate the call only if the object is NOT a container or if recursive is true
 				if (recursive || !(child is ISignalContainer))
 				{
@@ -63,14 +61,41 @@ namespace SignalHierarchy
 			}
 
 			return collectorStack;
-
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			//[TO-DO] [TEST-ME]
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 	//ENDOF Implementación ISignalHandler
 
 	//Implementación ISignalContainer
+		//Adjust offset and Re-organize contents so that the earliest element sits at position 0 and every element keeps its absolute position. Acts recursively
+		//Returns this element’s new offset
+		void ISignalContainer.AutoRebaseOffsets ()
+		{
+			//loop once through the list of children trying to determine target offset
+			int lowestOffset = int.MinValue;
+			foreach (ISignalContent child in contents)
+			{
+				ISignalContainer childAsContainer = child as ISignalContainer;
+				//propagate the AutoRebaseOffsets call to container elements, so they also have a 0-index offset
+				if (childAsContainer != null)
+				{
+					childAsContainer.AutoRebaseOffsets();
+				}
+
+				//keep the lowest offset out of every contained element to determine zero-index offset
+				if (child.Offset < lowestOffset) {
+					lowestOffset = child.Offset;
+				}
+			}
+
+			//now that we know the position of the earliest element, adjust this container's and every content's offset
+			//so lowest element sits a position 0
+			_offset += lowestOffset;
+
+			foreach (ISignalContent child in contents)
+			{
+				child.Offset -= lowestOffset;	
+			}
+		}
+
 		//Insert newEntry object.
 		//If a position is given updates child offset. If absolutePosition = false, apply this container’s offset to child position.
 		void ISignalContainer.AddChild (ISignalContent newEntry)
@@ -113,10 +138,6 @@ namespace SignalHierarchy
 			}
 			//finally return a reference to the collector array
 			return collectorArray;
-
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			//[TO-DO] [TEST-ME]
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
 		}
 
 		//return every children with values at target position.
