@@ -320,6 +320,60 @@ namespace SignalHierarchyTests
     //ENDOF ISignalHandler interface
 
     //ISignalContainer interface
+        //> AutoRebaseOffsets ()
+            //> Check if offsets above 0 are properly rebased
+        [Test]
+        public void UTSignalFragmentAutoRebaseOffsets1 ()
+        {
+            ISignalContainer testItem1 = new SignalFragment(3, 
+                new List<ISignalContent> {
+                    new Wave(6, 3),
+                    new Wave(7, 4),
+                    new SignalFragment(5, new List<ISignalContent> {
+                        new Wave(9, 1)
+                    })
+                }
+            ) as ISignalContainer;
+
+            Assert.AreEqual(6, testItem1.GetValuesAt(6).GetCombinedValue());
+            Assert.AreEqual(7, testItem1.GetValuesAt(7).GetCombinedValue());
+            Assert.AreEqual(9, testItem1.GetValuesAt(9).GetCombinedValue());
+
+            testItem1.AutoRebaseOffsets();
+
+            Assert.AreEqual(6, testItem1.GetValuesAt(6).GetCombinedValue());
+            Assert.AreEqual(7, testItem1.GetValuesAt(7).GetCombinedValue());
+            Assert.AreEqual(9, testItem1.GetValuesAt(9).GetCombinedValue());
+            Assert.AreEqual(6, (testItem1 as ISignalContent).Offset);
+            Assert.AreEqual(3, (testItem1.GetChildrenTouching(9, recursive: false)[0] as ISignalContent).Offset);
+        }
+            //> Check if offsets above 0 are properly rebased
+        [Test]
+        public void UTSignalFragmentAutoRebaseOffsets2 ()
+        {
+             ISignalContainer testItem1 = new SignalFragment(-3, 
+                new List<ISignalContent> {
+                    new Wave(-6, -3),
+                    new Wave(-7, -4),
+                    new SignalFragment(-5, new List<ISignalContent> {
+                        new Wave(-9, -1)
+                    })
+                }
+            ) as ISignalContainer;
+
+            Assert.AreEqual(-6, testItem1.GetValuesAt(-6).GetCombinedValue());
+            Assert.AreEqual(-7, testItem1.GetValuesAt(-7).GetCombinedValue());
+            Assert.AreEqual(-9, testItem1.GetValuesAt(-9).GetCombinedValue());
+
+            testItem1.AutoRebaseOffsets();
+
+            Assert.AreEqual(-6, testItem1.GetValuesAt(-6).GetCombinedValue());
+            Assert.AreEqual(-7, testItem1.GetValuesAt(-7).GetCombinedValue());
+            Assert.AreEqual(-9, testItem1.GetValuesAt(-9).GetCombinedValue());
+            Assert.AreEqual(-9, (testItem1 as ISignalContent).Offset);
+            Assert.AreEqual(0, (testItem1.GetChildrenTouching(-9, recursive: false)[0] as ISignalContent).Offset);
+        }
+
         //> AddChild (ISignalContent newEntry)
             //> Check if an EXISTENT child is properly added
         [Test]

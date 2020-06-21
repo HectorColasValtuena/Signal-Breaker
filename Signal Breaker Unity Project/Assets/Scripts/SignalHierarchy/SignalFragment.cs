@@ -70,7 +70,7 @@ namespace SignalHierarchy
 		void ISignalContainer.AutoRebaseOffsets ()
 		{
 			//loop once through the list of children trying to determine target offset
-			int lowestOffset = int.MinValue;
+			int lowestOffset = int.MaxValue;
 			foreach (ISignalContent child in contents)
 			{
 				ISignalContainer childAsContainer = child as ISignalContainer;
@@ -85,6 +85,9 @@ namespace SignalHierarchy
 					lowestOffset = child.Offset;
 				}
 			}
+
+			//skip restructuring offsets if they area already 0-aligned
+			if (lowestOffset == 0) { return; }
 
 			//now that we know the position of the earliest element, adjust this container's and every content's offset
 			//so lowest element sits a position 0
