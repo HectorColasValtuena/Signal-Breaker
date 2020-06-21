@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SinusoidLineDrawer : MonoBehaviour
+public class WaveDrawer : MonoBehaviour
 {
 	public float intensity;
 	public float length;
