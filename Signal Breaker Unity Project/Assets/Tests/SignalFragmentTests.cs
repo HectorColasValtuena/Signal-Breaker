@@ -240,10 +240,10 @@ namespace SignalHierarchyTests
                 }
             );
             
-            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: false).GetCombinedValue());
-            Assert.AreEqual(0, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: false).GetCombinedValue());
-            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: true).GetCombinedValue());
-            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: true).GetCombinedValue());
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: false).Value);
+            Assert.AreEqual(0, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: false).Value);
+            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: true).Value);
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: true).Value);
         }
 
             //> Get MULTIPLE VALUES at position, in different loop multiples USING loopLength, recursively
@@ -264,10 +264,10 @@ namespace SignalHierarchyTests
                 }
             );
             
-            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, loopLength: 6, recursive: false).GetCombinedValue());
-            Assert.AreEqual(0, (testItem1 as ISignalHandler).GetValuesAt(2, loopLength: 6, recursive: false).GetCombinedValue());
-            Assert.AreEqual(3, (testItem1 as ISignalHandler).GetValuesAt(0, loopLength: 6, recursive: true).GetCombinedValue());
-            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(2, loopLength: 6, recursive: true).GetCombinedValue());
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, loopLength: 6, recursive: false).Value);
+            Assert.AreEqual(0, (testItem1 as ISignalHandler).GetValuesAt(2, loopLength: 6, recursive: false).Value);
+            Assert.AreEqual(3, (testItem1 as ISignalHandler).GetValuesAt(0, loopLength: 6, recursive: true).Value);
+            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(2, loopLength: 6, recursive: true).Value);
         }
 
             //> Check if an EXISTENT value at a deeper level is ignored if NON RECURSIVE
@@ -285,10 +285,10 @@ namespace SignalHierarchyTests
                 }
             );
 
-            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(0).GetCombinedValue());
-            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(2).GetCombinedValue());
-            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: false).GetCombinedValue());
-            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: false).GetCombinedValue());
+            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(0).Value);
+            Assert.AreEqual(2, (testItem1 as ISignalHandler).GetValuesAt(2).Value);
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(0, recursive: false).Value);
+            Assert.AreEqual(1, (testItem1 as ISignalHandler).GetValuesAt(2, recursive: false).Value);
         }
 
             //> PROVIDING collectorStack, get EXISTENT values at position
@@ -308,11 +308,11 @@ namespace SignalHierarchyTests
 
             ISignalStack testCollector = new WaveStack();
             (testItem1 as ISignalHandler).GetValuesAt(0, collectorStack: testCollector);
-            Assert.AreEqual(1, testCollector.GetCombinedValue());
+            Assert.AreEqual(1, testCollector.Value);
 
             testCollector = new WaveStack();
             (testItem1 as ISignalHandler).GetValuesAt(2, collectorStack: testCollector);
-            Assert.AreEqual(2, testCollector.GetCombinedValue());
+            Assert.AreEqual(2, testCollector.Value);
         }
 
 
@@ -335,15 +335,15 @@ namespace SignalHierarchyTests
                 }
             ) as ISignalContainer;
 
-            Assert.AreEqual(6, testItem1.GetValuesAt(6).GetCombinedValue());
-            Assert.AreEqual(7, testItem1.GetValuesAt(7).GetCombinedValue());
-            Assert.AreEqual(9, testItem1.GetValuesAt(9).GetCombinedValue());
+            Assert.AreEqual(6, testItem1.GetValuesAt(6).Value);
+            Assert.AreEqual(7, testItem1.GetValuesAt(7).Value);
+            Assert.AreEqual(9, testItem1.GetValuesAt(9).Value);
 
             testItem1.AutoRebaseOffsets();
 
-            Assert.AreEqual(6, testItem1.GetValuesAt(6).GetCombinedValue());
-            Assert.AreEqual(7, testItem1.GetValuesAt(7).GetCombinedValue());
-            Assert.AreEqual(9, testItem1.GetValuesAt(9).GetCombinedValue());
+            Assert.AreEqual(6, testItem1.GetValuesAt(6).Value);
+            Assert.AreEqual(7, testItem1.GetValuesAt(7).Value);
+            Assert.AreEqual(9, testItem1.GetValuesAt(9).Value);
             Assert.AreEqual(6, (testItem1 as ISignalContent).Offset);
             Assert.AreEqual(3, (testItem1.GetChildrenTouching(9, recursive: false)[0] as ISignalContent).Offset);
         }
@@ -361,15 +361,15 @@ namespace SignalHierarchyTests
                 }
             ) as ISignalContainer;
 
-            Assert.AreEqual(-6, testItem1.GetValuesAt(-6).GetCombinedValue());
-            Assert.AreEqual(-7, testItem1.GetValuesAt(-7).GetCombinedValue());
-            Assert.AreEqual(-9, testItem1.GetValuesAt(-9).GetCombinedValue());
+            Assert.AreEqual(-6, testItem1.GetValuesAt(-6).Value);
+            Assert.AreEqual(-7, testItem1.GetValuesAt(-7).Value);
+            Assert.AreEqual(-9, testItem1.GetValuesAt(-9).Value);
 
             testItem1.AutoRebaseOffsets();
 
-            Assert.AreEqual(-6, testItem1.GetValuesAt(-6).GetCombinedValue());
-            Assert.AreEqual(-7, testItem1.GetValuesAt(-7).GetCombinedValue());
-            Assert.AreEqual(-9, testItem1.GetValuesAt(-9).GetCombinedValue());
+            Assert.AreEqual(-6, testItem1.GetValuesAt(-6).Value);
+            Assert.AreEqual(-7, testItem1.GetValuesAt(-7).Value);
+            Assert.AreEqual(-9, testItem1.GetValuesAt(-9).Value);
             Assert.AreEqual(-9, (testItem1 as ISignalContent).Offset);
             Assert.AreEqual(0, (testItem1.GetChildrenTouching(-9, recursive: false)[0] as ISignalContent).Offset);
         }
