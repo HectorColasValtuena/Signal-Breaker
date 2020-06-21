@@ -8,14 +8,12 @@
 	{
 		private int total = 0;
 
+		int ISignalValue.Value { get { return total; } }
+		
 		void ISignalStack.AddValue (int newValue)
 		{
 			total += newValue;
 		}
 
-		int ISignalStack.GetCombinedValue ()
-		{
-			return total;
-		}
 	}
 }

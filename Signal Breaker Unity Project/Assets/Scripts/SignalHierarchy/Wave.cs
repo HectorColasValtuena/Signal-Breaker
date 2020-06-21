@@ -1,6 +1,6 @@
 namespace SignalHierarchy 
 {
-	public class Wave : ISignalContent
+	public class Wave : ISignalContent, ISignalValue
 	{
 		//waveValue objeto conteniendo las propiedades de una onda
 		private int _waveValue = 0;
@@ -19,8 +19,14 @@ namespace SignalHierarchy
 		}
 	//ENDOF Constructor
 
+	//Implementación ISignalValue
+		int ISignalValue.Value { get { return _waveValue; } }
+	//ENDOF Implementación ISignalValue
+
 	//Implementación ISignalContent
 		int ISignalContent.Offset { get { return _offset; } set { _offset = value; } }
+		//al hacer miVariable = Wave.Offset ejecutamos get
+		//al hacer Wave.Offset = 5 ejecutamos set
 	//ENDOF Implementación ISignalContent
 
 	//Implementación ISignalHandler

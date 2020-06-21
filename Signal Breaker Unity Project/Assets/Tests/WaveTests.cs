@@ -135,19 +135,19 @@ namespace SignalHierarchyTests
             ISignalHandler TestItem4 = (new Wave (-2, -2) as ISignalHandler);
 
             Assert.AreEqual(
-                TestItem1.GetValuesAt(0, new WaveStack()).GetCombinedValue(),
+                TestItem1.GetValuesAt(0, new WaveStack()).Value,
                 1
             );
             Assert.AreEqual(
-                TestItem2.GetValuesAt(2, new WaveStack()).GetCombinedValue(),
+                TestItem2.GetValuesAt(2, new WaveStack()).Value,
                 2
             );
             Assert.AreEqual(
-                TestItem3.GetValuesAt(8, new WaveStack()).GetCombinedValue(),
+                TestItem3.GetValuesAt(8, new WaveStack()).Value,
                 3
             );
             Assert.AreEqual(
-                TestItem4.GetValuesAt(-2, new WaveStack()).GetCombinedValue(),
+                TestItem4.GetValuesAt(-2, new WaveStack()).Value,
                 -2
             );
         }
@@ -161,19 +161,19 @@ namespace SignalHierarchyTests
             ISignalHandler TestItem4 = (new Wave (-2, -2) as ISignalHandler);
 
             Assert.AreEqual(
-                TestItem1.GetValuesAt(12, new WaveStack(), 6).GetCombinedValue(),
+                TestItem1.GetValuesAt(12, new WaveStack(), 6).Value,
                 1
             );
             Assert.AreEqual(
-                TestItem2.GetValuesAt(-4, new WaveStack(), 6).GetCombinedValue(),
+                TestItem2.GetValuesAt(-4, new WaveStack(), 6).Value,
                 2
             );
             Assert.AreEqual(
-                TestItem3.GetValuesAt(2, new WaveStack(), 6).GetCombinedValue(),
+                TestItem3.GetValuesAt(2, new WaveStack(), 6).Value,
                 3
             );
             Assert.AreEqual(
-                TestItem4.GetValuesAt(4, new WaveStack(), 6).GetCombinedValue(),
+                TestItem4.GetValuesAt(4, new WaveStack(), 6).Value,
                 -2
             );
         }
@@ -187,19 +187,19 @@ namespace SignalHierarchyTests
             ISignalHandler TestItem4 = (new Wave (-2, -2) as ISignalHandler);
 
             Assert.AreEqual(
-                TestItem1.GetValuesAt(3, new WaveStack()).GetCombinedValue(),
+                TestItem1.GetValuesAt(3, new WaveStack()).Value,
                 0
             );
             Assert.AreEqual(
-                TestItem2.GetValuesAt(3, new WaveStack()).GetCombinedValue(),
+                TestItem2.GetValuesAt(3, new WaveStack()).Value,
                 0
             );
             Assert.AreEqual(
-                TestItem3.GetValuesAt(6, new WaveStack(), 6).GetCombinedValue(),
+                TestItem3.GetValuesAt(6, new WaveStack(), 6).Value,
                 0
             );
             Assert.AreEqual(
-                TestItem4.GetValuesAt(6, new WaveStack(), 6).GetCombinedValue(),
+                TestItem4.GetValuesAt(6, new WaveStack(), 6).Value,
                 0
             );
         }
@@ -213,19 +213,19 @@ namespace SignalHierarchyTests
             ISignalHandler TestItem4 = (new Wave (-2, -2) as ISignalHandler);
 
             Assert.AreEqual(
-                TestItem1.GetValuesAt(0).GetCombinedValue(),
+                TestItem1.GetValuesAt(0).Value,
                 1
             );
             Assert.AreEqual(
-                TestItem2.GetValuesAt(2).GetCombinedValue(),
+                TestItem2.GetValuesAt(2).Value,
                 2
             );
             Assert.AreEqual(
-                TestItem3.GetValuesAt(2, loopLength: 6).GetCombinedValue(),
+                TestItem3.GetValuesAt(2, loopLength: 6).Value,
                 3
             );
             Assert.AreEqual(
-                TestItem4.GetValuesAt(4, loopLength: 6).GetCombinedValue(),
+                TestItem4.GetValuesAt(4, loopLength: 6).Value,
                 -2
             );
         }
