@@ -6,6 +6,7 @@ namespace WordlScreen
 {
 	public class WaveDrawer : MonoBehaviour
 	{
+		private float baseZ = -1.0f;
 		private int pointDensity = 42;
 		private ISignalValue wave;
 		private float length;
@@ -47,9 +48,9 @@ namespace WordlScreen
 				float horzPos = (Mathf.PI/(pointDensity+1)) * i;
 
 				pointList[i] = new Vector3(
-					(((Mathf.Cos(horzPos) - 1) * -1)/2) * length, //Cambiamos el coseno de un rango (-1, 1) a un rango (0, 1)
-					 Mathf.Sin(horzPos) * intensity,
-					 0
+					(((Mathf.Cos(horzPos) - 1) * -1)/2) * length,	//X  //Cambiamos el coseno de un rango (-1, 1) a un rango (0, 1)
+					 Mathf.Sin(horzPos) * intensity,				//Y
+					 baseZ											//Z
 				);
 			}
 
@@ -58,8 +59,8 @@ namespace WordlScreen
 		}
 
 		private float GetLengthFromContainer () {
-			Debug.Log((transform as RectTransform).rect.width);
-			return (transform as RectTransform).rect.width;
+			//Debug.Log((transform as RectTransform).rect.width);
+			return (lineRenderer.transform as RectTransform).rect.width;
 		}
 	}
 }
