@@ -2,14 +2,15 @@
 using SignalHierarchy;
 using UnityEngine;
 
-namespace WordlScreen
+namespace WorldScreen
 {
 	public class WaveDrawer : MonoBehaviour
 	{
 		private float baseZ = -1.0f;
 		private int pointDensity = 42;
-		private ISignalValue wave;
+		//private ISignalValue wave;
 		private float length;
+		private float intensity;
 
 		public LineRenderer lineRenderer;
 
@@ -17,24 +18,28 @@ namespace WordlScreen
 		//targetWave es el objeto que contendrá el valor que queremos dibujar
 		//si length > 0, la onda medirá length de punta a punta. Si omitido o < 0, cogerá length de la anchura del contenedor
 		//si se provee material, ajustaremos el material usado por el LineRenderer
-		public void setParametersAndRedraw (ISignalValue targetWave, float targetLength = -1.0f, Material material = null)
+		public void SetParametersAndRedraw (ISignalValue targetWave, float targetLength = -1.0f, Material material = null)
 		{
 			if (targetWave == null) { Debug.LogWarning("no ISignalValue element provided to render @WaveDrawer.RedrawLine();"); return; }
+			SetParametersAndRedraw(targetWave.Value, targetLength, material);
+			//wave = targetWave;
+			
+		}
 
-			wave = targetWave;
-					//(condición) ? true : false
+		public void SetParametersAndRedraw (int waveValue, float targetLength = -1.0f, Material material = null)
+		{
+			intensity = waveValue;
 			length = (targetLength > 0.0f) ? targetLength : GetLengthFromContainer();
 			if (material != null) { lineRenderer.material = material; }
 
 			RedrawLine();
+
 		}
 
 
 		//Este método actualiza el lineRenderer según las propiedades del objeto
 		public void RedrawLine ()
 		{
-			if (wave == null) { Debug.LogWarning("no ISignalValue element provided to render @WaveDrawer.RedrawLine();"); return; }
-			float intensity = wave.Value;
 			//lista de puntos que vamos a inyectar al lineRenderer
 			Vector3[] pointList = new Vector3[pointDensity + 2];
 

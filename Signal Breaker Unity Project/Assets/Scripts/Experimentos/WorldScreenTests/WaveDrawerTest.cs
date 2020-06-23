@@ -1,5 +1,5 @@
 ﻿using SignalHierarchy;
-using WordlScreen;
+using WorldScreen;
 using UnityEngine;
 
 public class WaveDrawerTest : MonoBehaviour
@@ -10,6 +10,6 @@ public class WaveDrawerTest : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		waveDrawer.setParametersAndRedraw(new Wave(value) as ISignalValue);
+		waveDrawer.SetParametersAndRedraw(new Wave(value) as ISignalValue);
 	}
 }
